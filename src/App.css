@@ -1,38 +1,170 @@
-.App {
-  text-align: center;
+/* Global CSS Start */
+.gridCard {
+    margin: 1.5rem 0.5rem !important;
+    background-color: white;
+    padding: 10px;
+    height: 100%;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.coloredTxt {
+    color: #0693E3 !important;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.coloredBg {
+    background-color: #0693E3 !important;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.link {
+    text-decoration: none;
+    color: black;
 }
 
-.App-link {
-  color: #61dafb;
+.alignCenter {
+    margin: auto;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.fwBold {
+    font-weight: 600 !important;
 }
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 0 15px;
+}
+
+.avatar {
+    border: 2px solid #0693E3;
+}
+
+.shareBtn {
+    margin: 12px 5px 0;
+}
+
+/* Global CSS End */
+
+
+/* Write Post Component CSS Start */
+.userName {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.multilineTextField {
+    padding: 10px;
+}
+
+.writePostFooter {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.postBtn {
+    margin: 0 10px !important;
+    background-color: #0693E3 !important;
+    padding: 8px 16px;
+    border: 0;
+    border-radius: 25px;
+    color: white;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+/* Post Feed Component CSS End */
+
+
+/* User Info Component CSS Start */
+.userInfoGridCard {
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.userInfoGrid {
+    margin: 1.5rem 0.5rem 0 !important;
+    background-color: white;
+    padding: 10px;
+}
+
+.userInfo {
+    display: flex;
+    flex-direction: column;
+}
+
+.btn {
+    margin-top: 20px !important;
+    font-weight: 600 !important;
+    background-color: #0693E3;
+    color: white;
+    padding: 8px 16px;
+    border: 0;
+    border-radius: 25px;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+/* User Info Component CSS End */
+
+/* Footer Component CSS Start */
+.footerSection {
+    padding: 50px 80px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #888888;
+}
+
+.smIconHolder {
+    width: 100px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.smIcon {
+    cursor: pointer;
+}
+
+.smIcon:hover {
+    color: #0693E3;
+}
+
+.txtHolder {
+    text-align: right;
+}
+
+.developer {
+    background-color: #0693E3;
+    padding: 4px 8px;
+    border-radius: 8px;
+}
+
+/* Footer Component CSS End */
+
+/* Responsive for Footer Component CSS Start */
+/* Mobile Design Start */
+@media only screen and (max-width: 600px) {
+    .footerSection {
+        padding: 2rem 1.5rem;
+    }
+
+    .smIconHolder {
+        justify-content: center !important;
+    }
+
+    .smIcon {
+        margin: 0 6px;
+    }
+
+    .txtHolder {
+        text-align: center;
+        margin-top: 20px !important;
+    }
+
+    .developer {
+        display: block;
+        width: 140px;
+        margin: 8px auto;
+    }
+}
+
+/* Mobile Design End */
+/* Responsive for Footer Component CSS End */
