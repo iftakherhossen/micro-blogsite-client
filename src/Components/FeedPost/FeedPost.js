@@ -1,97 +1,147 @@
-import { Avatar, Card, CardActions, CardContent, CardHeader, IconButton, Modal, Tooltip, Typography } from '@mui/material';
+import { Avatar, Card, CardActions, CardContent, CardHeader, ClickAwayListener, IconButton, Modal, Tooltip, Typography } from '@mui/material';
 import React, { useState } from 'react';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import { Box } from '@mui/system';
-import { EmailShareButton, FacebookShareButton, TelegramShareButton, TwitterShareButton, WhatsappShareButton} from "react-share";
+import { EmailShareButton, FacebookShareButton, TelegramShareButton, TwitterShareButton, WhatsappShareButton } from "react-share";
 import { EmailIcon, FacebookIcon, TelegramIcon, TwitterIcon, WhatsappIcon } from "react-share";
+import { Link } from 'react-router-dom';
+import ArticleIcon from '@mui/icons-material/Article';
+import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
-const style = {
+const modalStyle = {
     position: 'absolute',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 200,
+    width: 250,
     bgcolor: '#E6ECF0',
     boxShadow: 24,
     p: 3,
     textAlign: 'center'
 };
 
-const FeedPost = () => {
-    const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+const moreBtnPortalStyle = {
+    position: 'absolute',
+    top: 30,
+    right: 75,
+    zIndex: 1,
+    p: 1,
+    width: '100%',
+    bgcolor: 'transparent',
+    display: 'flex',
+    justifyContent: 'flex-start'
+};
+
+const FeedPost = ({ singlePost }) => {
+    const { _id, username, date, img, content } = singlePost;
+    const [modalOpen, setModalOpen] = useState(false);
+    const [moreOpen, setMoreOpen] = useState(false);
+    const handleModalOpen = () => setModalOpen(true);
+    const handleModalClose = () => setModalOpen(false);
+    const handleClick = () => setMoreOpen((prev) => !prev);
+    const handleClickAway = () => setMoreOpen(false);
+    const [color, setColor] = useState('#aaa');
+    const link = `/${username}`;
+    const updatedLink = link.replace(/ /g, '');
 
     const hashtags = ["#microblogsite", "#postoftheday"];
     const related = ["@iftakher_hossen", "@microbblogsite"];
+
+    const handleReaction = e => {
+        setColor('red')
+    }
 
     return (
         <Card sx={{ width: 1, mt: 1, mb: 2 }}>
             <CardHeader
                 avatar={
-                    <Avatar alt="User Name" src="img" sx={{ bgcolor: "#0693E3" }} />
+                    <Avatar alt={username} src={img} sx={{ bgcolor: "#0693E3" }} />
                 }
                 action={
-                    <IconButton aria-label="settings">
-                        <MoreVertIcon />
-                    </IconButton>
+                    <ClickAwayListener onClickAway={handleClickAway}>
+                        <Box sx={{ position: 'relative' }}>
+                            <IconButton aria-label="settings" onClick={handleClick}>
+                                <MoreVertIcon className="iconHover" />
+                            </IconButton>
+                            {moreOpen ? (
+                                <Box sx={moreBtnPortalStyle}>
+                                    <Tooltip title="View Post">
+                                        <IconButton aria-label="full-post">
+                                            <ArticleIcon className="iconHover" />
+                                        </IconButton>
+                                    </Tooltip>
+                                    <Tooltip title="Copy Text">
+                                        <IconButton aria-label="copy-post">
+                                            <ContentCopyIcon className="iconHover" />
+                                        </IconButton>
+                                    </Tooltip>
+                                    <Tooltip title="Save Post">
+                                        <IconButton aria-label="save-post">
+                                            <LibraryAddIcon className="iconHover" />
+                                        </IconButton>
+                                    </Tooltip>
+                                </Box>
+                            ) : null}
+                        </Box>
+                    </ClickAwayListener>
                 }
                 title={
-                    <Typography variant="body1" className="postTitle">User Name</Typography>
+                    <Link to={updatedLink} className="link" >
+                        <Typography variant="body1" sx={{ mb: '-4px' }} className="fwBold">{username}</Typography>
+                    </Link>
                 }
-                subheader="Post Time & Date"
+                subheader={
+                    <Typography variant="caption" sx={{ color: '#aaa', mt: 0, pt: 0 }}> {date}</Typography>
+                }
             />
             <CardContent>
-                <Typography variant="body2" color="text.secondary">
-                    This impressive paella is a perfect party dish and a fun meal to cook
-                    together with your guests. Add 1 cup of frozen peas along with the mussels,
-                    if you like.
-                </Typography>
+                <Typography variant="body1">{content}</Typography>
             </CardContent>
             <CardActions sx={{ justifyContent: 'flex-end' }}>
-                <IconButton aria-label="add to favorites">
-                    <FavoriteIcon />
+                <IconButton onClick={handleReaction}>
+                    <FavoriteIcon className="redHover" sx={{ color: color }} />
                 </IconButton>
-                <IconButton aria-label="share" onClick={handleOpen}>
-                    <ShareIcon />
+                <IconButton aria-label="share" onClick={handleModalOpen}>
+                    <ShareIcon className="iconHover" />
                 </IconButton>
             </CardActions>
 
 
             {/* Modal Start */}
             <Modal
-                open={open}
-                onClose={handleClose}
+                open={modalOpen}
+                onClose={handleModalClose}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
-                <Box sx={style}>
+                <Box sx={modalStyle}>
                     <Typography id="modal-modal-title" variant="h6" component="h2">
                         Share this Post
                     </Typography>
-                    <Box>
-                        <EmailShareButton url="" subject="Sharing Post via Email" body="Iftakher Hossen posted on Micro Blogsite, url" separator=" " className="shareBtn">
-                            <EmailIcon size={30} round={true}  />
+                    <Box sx={{ mt: 1 }}>
+                        <EmailShareButton url={`/${username}/posts/${_id}`} subject="Sharing Post via Email" body={`${username} shared a post on micro blogsite`} separator=" " className="shareBtn">
+                            <EmailIcon size={30} round={true} />
                         </EmailShareButton>
-                        <FacebookShareButton url="" title="Iftakher Hossen posted on Micro Blogsite" hashtags={hashtags} className="shareBtn">
-                            <FacebookIcon size={30} round={true}  />
+                        <FacebookShareButton url={`/${username}/posts/${_id}`} title={`${username} shared a post on micro blogsite`} hashtags={hashtags} className="shareBtn">
+                            <FacebookIcon size={30} round={true} />
                         </FacebookShareButton>
-                        <TelegramShareButton url="" title="Iftakher Hossen posted on Micro Blogsite" className="shareBtn">
-                            <TelegramIcon size={30} round={true}  />
+                        <TelegramShareButton url={`/${username}/posts/${_id}`} title={`${username} shared a post on micro blogsite`} className="shareBtn">
+                            <TelegramIcon size={30} round={true} />
                         </TelegramShareButton>
-                        <TwitterShareButton url="" title="Iftakher Hossen posted on Micro Blogsite" via="Micro Blogsite" hashtags={hashtags} related={related} className="shareBtn">
-                            <TwitterIcon size={30} round={true}  />
+                        <TwitterShareButton url={`/${username}/posts/${_id}`} title={`${username} shared a post on micro blogsite`} via="Micro Blogsite" hashtags={hashtags} related={related} className="shareBtn">
+                            <TwitterIcon size={30} round={true} />
                         </TwitterShareButton>
-                        <WhatsappShareButton url="" separator=" " title="Iftakher Hossen posted on Micro Blogsite" className="shareBtn">
-                            <WhatsappIcon size={30} round={true}  />
+                        <WhatsappShareButton url={`/${username}/posts/${_id}`} separator=" " title={`${username} shared a post on micro blogsite`} className="shareBtn">
+                            <WhatsappIcon size={30} round={true} />
                         </WhatsappShareButton>
                     </Box>
                 </Box>
             </Modal>
             {/* Modal End */}
-        </Card>
+        </Card >
     );
 };
 

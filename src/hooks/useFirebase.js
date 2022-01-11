@@ -14,19 +14,21 @@ const useFirebase = () => {
     const googleProvider = new GoogleAuthProvider();
 
     // google sign in
-    const signInWithGoogle = () => {
+    const signInWithGoogle = (location, navigate) => {
         setIsLoading(true);
         signInWithPopup(auth, googleProvider)
             .then((result) => {
                 const user = result.user;
-                saveUser(user.email, user.displayName, user.photoURL)
-                setAuthError('');
+                saveUser(user.email, user.displayName, user.photoURL);
+                setAuthError("");
+                const destination = location?.state?.from || "/";
+                navigate(destination);
             })
             .catch((error) => {
                 setAuthError(error.message);
             })
             .finally(() => setIsLoading(false));
-    }
+    };
 
     //observe user state
     useEffect(() => {
@@ -43,6 +45,7 @@ const useFirebase = () => {
     }, [auth])
 
     const logOut = () => {
+        setIsLoading(true);
         signOut(auth)
             .then(() => { })
             .catch((error) => { })
@@ -53,14 +56,14 @@ const useFirebase = () => {
         const user = { email, displayName, photoURL };
 
         fetch('http://localhost:5000/users', {
-            method: 'POST',
+            method: "PUT",
             headers: {
                 'content-type': 'application/json'
             },
             body: JSON.stringify(user)
         })
-            .then(res => res.json())
-            .then(data => console.log(data));
+            .then((res) => res.json())
+            .then((data) => console.log(data));
     }
 
     return {

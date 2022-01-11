@@ -1,16 +1,23 @@
 import { Avatar, ListItem, ListItemAvatar, ListItemText, Typography } from '@mui/material';
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-const User = () => {
+const User = ({ folk }) => {
+    const { displayName, photoURL } = folk;
+    const link = `/${displayName}`;
+    const updatedLink = link.replace(/ /g, '');
+
     return (
-        <ListItem dense>
-            <ListItemAvatar>
-                <Avatar alt="User Avatar" src="avatar" />
-            </ListItemAvatar>
-            <ListItemText>
-                <Typography>User Name</Typography>
-            </ListItemText>
-        </ListItem>
+        <Link to={updatedLink} className="link">
+            <ListItem className="listItem userProfile" sx={{ p: 1}}>
+                <ListItemAvatar sx={{p: 0, m: 0}}>
+                    <Avatar alt="User Avatar" src={photoURL} />
+                </ListItemAvatar>
+                <ListItemText sx={{p: 0, m: 0}}>
+                    <Typography sx={{fontSize: '0.9em', fontWeight: 600}}>{displayName}</Typography>
+                </ListItemText>
+            </ListItem>
+        </Link>
     );
 };
 
