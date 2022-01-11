@@ -69,6 +69,13 @@
   display: flex;
 }
 
+.mark {
+  color: #0693E3;
+}
+.mark:hover {
+  text-decoration: underline;
+}
+
 /* Global CSS End */
 
 

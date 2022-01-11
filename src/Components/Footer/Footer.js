@@ -14,7 +14,7 @@ const Footer = () => {
                     <LinkedInIcon className="smIcon" />
                 </Grid>
                 <Grid item xs={12} sm={10} md={11} className="txtHolder">
-                    <Typography className="fwBold">© 2021, All rights reserved, Developed By  <span className="developer"><a href="https://iftakher-hossen.vercel.app/" style={{ textDecoration: 'none', color: 'white' }}>Iftakher Hossen</a></span></Typography>
+                    <Typography className="fwBold">© 2021, All rights reserved, Developed By  <span className="developer"><a href="https://iftakher-hossen.vercel.app/" target="_blank" rel="noreferrer" style={{ textDecoration: 'none', color: 'white' }}>Iftakher Hossen</a></span></Typography>
                 </Grid>
             </Grid>
         </Container>
