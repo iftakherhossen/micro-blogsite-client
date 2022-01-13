@@ -6,7 +6,7 @@ const PostFeed = () => {
     const [post, setPost] = useState([]);
 
     useEffect(() => {
-        fetch('https://micro-blogsite-iftakherhossen.herokuapp.com/posts')
+        fetch('http://localhost:5000/posts')
             .then(res => res.json())
             .then(data => setPost(data));
     }, [])

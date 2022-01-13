@@ -14,7 +14,7 @@ const WritePost = () => {
     const [openSnackbar, setOpenSnackbar] = useState(false);
     const today = new Date();
     const weekday = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-    const date = today.getHours()+ ':' + today.getMinutes() + ' ' + weekday[today.getDay()] + ', ' + today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear();
+    const date = today.getHours() + ':' + today.getMinutes() + ' ' + weekday[today.getDay()] + ', ' + today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear();
 
     const onSubmit = data => {
         const content = data.content;
@@ -27,7 +27,7 @@ const WritePost = () => {
             date
         }
 
-        fetch('https://micro-blogsite-iftakherhossen.herokuapp.com/posts', {
+        fetch('http://localhost:5000/posts', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'

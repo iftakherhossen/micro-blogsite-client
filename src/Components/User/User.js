@@ -3,8 +3,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const User = ({ folk }) => {
-    const { displayName, photoURL } = folk;
-    const link = `/${displayName}`;
+    const { _id, displayName, photoURL } = folk;
+    const link = `/users/${_id}:${displayName}`;
     const updatedLink = link.replace(/ /g, '');
 
     return (

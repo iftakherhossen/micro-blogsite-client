@@ -55,7 +55,7 @@ const useFirebase = () => {
     const saveUser = (email, displayName, photoURL) => {
         const user = { email, displayName, photoURL };
 
-        fetch('https://micro-blogsite-iftakherhossen.herokuapp.com/users', {
+        fetch('http://localhost:5000/users', {
             method: "PUT",
             headers: {
                 'content-type': 'application/json'

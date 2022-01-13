@@ -13,12 +13,12 @@ const UserInfo = () => {
     const [userPost, setUserPost] = useState([]);
 
     useEffect(() => {
-        fetch('https://micro-blogsite-iftakherhossen.herokuapp.com/users')
+        fetch('http://localhost:5000/users')
             .then(res => res.json())
             .then(data => setUsers(data));
     }, [])
     useEffect(() => {
-        fetch(`https://micro-blogsite-iftakherhossen.herokuapp.com/posts/${user.email}`)
+        fetch(`http://localhost:5000/posts/${user.email}`)
             .then(res => res.json())
             .then(data => setUserPost(data));
     }, [user.email])
@@ -32,7 +32,7 @@ const UserInfo = () => {
                             <Avatar alt="User Name" src={user.photoURL} className="avatar" />
                         </Box>
                         <Box className="userName">
-                            <Link to="/myProfile" className="link" style={{ cursor: 'pointer'}}><Typography variant="h6">{user.displayName}</Typography></Link>
+                            <Link to="/myProfile" className="link" style={{ cursor: 'pointer' }}><Typography variant="h6">{user.displayName}</Typography></Link>
                         </Box>
                         <Box className="alignCenter">
                             {user.email && <Typography variant="body2">Total Post - {userPost.length}</Typography>}

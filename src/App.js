@@ -13,7 +13,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/home" element={<Home />} />
           <Route path="/myPosts" element={<MyPosts />} />
-          <Route path="/:username" element={<UserProfile />} />
+          <Route path="/users/:id::email" element={<UserProfile />} />
         </Routes>
       </Router>
     </AuthProvider>
