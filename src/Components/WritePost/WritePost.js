@@ -27,7 +27,7 @@ const WritePost = () => {
             date
         }
 
-        fetch('http://localhost:5000/posts', {
+        fetch('https://micro-blogsite-iftakherhossen.herokuapp.com/posts', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'

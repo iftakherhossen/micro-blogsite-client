@@ -10,13 +10,6 @@ const HashTags = () => {
             </Box>
             <Box sx={{ p: 1 }}>
                 <Chip
-                    label="#newonbloom"
-                    component="a"
-                    href="/popular-posts/newonbloom"
-                    variant="outlined"
-                    clickable sx={{ margin: '4px 3px', border: '1px solid #0693E3' }}
-                />
-                <Chip
                     label="#trending"
                     component="a"
                     href="/popular-posts/trending"

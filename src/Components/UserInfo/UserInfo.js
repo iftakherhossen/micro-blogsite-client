@@ -13,12 +13,12 @@ const UserInfo = () => {
     const [userPost, setUserPost] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:5000/users')
+        fetch('https://micro-blogsite-iftakherhossen.herokuapp.com/users')
             .then(res => res.json())
             .then(data => setUsers(data));
     }, [])
     useEffect(() => {
-        fetch(`http://localhost:5000/posts/${user.email}`)
+        fetch(`https://micro-blogsite-iftakherhossen.herokuapp.com/posts/${user.email}`)
             .then(res => res.json())
             .then(data => setUserPost(data));
     }, [user.email])
