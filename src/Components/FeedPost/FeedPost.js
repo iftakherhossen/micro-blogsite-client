@@ -6,9 +6,11 @@ import ShareIcon from '@mui/icons-material/Share';
 import { Box } from '@mui/system';
 import { EmailShareButton, FacebookShareButton, TelegramShareButton, TwitterShareButton, WhatsappShareButton } from "react-share";
 import { EmailIcon, FacebookIcon, TelegramIcon, TwitterIcon, WhatsappIcon } from "react-share";
-import ArticleIcon from '@mui/icons-material/Article';
+import ReportIcon from '@mui/icons-material/Report';
 import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import DeleteIcon from '@mui/icons-material/Delete';
+import useAuth from '../../hooks/useAuth';
 
 const modalStyle = {
     position: 'absolute',
@@ -34,8 +36,9 @@ const moreBtnPortalStyle = {
     justifyContent: 'flex-start'
 };
 
-const FeedPost = ({ singlePost }) => {
-    const { _id, username, date, img, content } = singlePost;
+const FeedPost = ({ singlePost, handleDelete }) => {
+    const { _id, username, email, date, img, content } = singlePost;
+    const { user } = useAuth();
     const [modalOpen, setModalOpen] = useState(false);
     const [moreOpen, setMoreOpen] = useState(false);
     const handleModalOpen = () => setModalOpen(true);
@@ -44,7 +47,7 @@ const FeedPost = ({ singlePost }) => {
     const handleClickAway = () => setMoreOpen(false);
     const [color, setColor] = useState('#aaa');
 
-    const hashtags = ["microblogsite", "postoftheday"];
+    const hashtags = ["bloom", "microblogsite", "postoftheday"];
     const related = ["@iftakher_hossen", "@microbblogsite, @healyourselfbd"];
 
     const handleReaction = e => {
@@ -72,16 +75,23 @@ const FeedPost = ({ singlePost }) => {
                             </IconButton>
                             {moreOpen ? (
                                 <Box sx={moreBtnPortalStyle}>
-                                    <Tooltip title="View Post">
-                                        <IconButton aria-label="full-post">
-                                            <ArticleIcon className="iconHover" />
-                                        </IconButton>
-                                    </Tooltip>
+                                    {
+                                        user.email === email ? <Tooltip title="Delete Post">
+                                            <IconButton aria-label="delete-post" onClick={() => handleDelete(_id)}>
+                                                <DeleteIcon className="redHover" />
+                                            </IconButton>
+                                        </Tooltip> :
+                                            <Tooltip title="Report Post">
+                                                <IconButton aria-label="report-post">
+                                                    <ReportIcon className="redHover" />
+                                                </IconButton>
+                                            </Tooltip>
+                                    }
                                     <Tooltip title="Copy Text">
                                         <IconButton aria-label="copy-post" onClick={() => handleCopyBtn(content)}>
                                             <ContentCopyIcon className="iconHover" />
                                         </IconButton>
-                                    </Tooltip>
+                                    </Tooltip>                                    
                                     <Tooltip title="Save Post">
                                         <IconButton aria-label="save-post">
                                             <LibraryAddIcon className="iconHover" />

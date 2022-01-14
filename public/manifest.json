@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Bloom",
+  "name": "Bloom - Micro Blogsite",
   "icons": [
     {
       "src": "favicon.ico",

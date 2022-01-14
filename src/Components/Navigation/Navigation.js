@@ -12,13 +12,7 @@ const Navigation = () => {
     const [success, setSuccess] = useState(false);
     const [openSnackbar, setOpenSnackbar] = useState(false);
     const location = useLocation();
-    const link = `/users/${user.displayName}`;
-    const updatedLink = link.replace(/ /g, '');
     const navigate = useNavigate();
-
-    const handleUserProfile = (data) => {
-        navigate(updatedLink, { state: data });
-    }
 
     const handleGoogleSignIn = () => {
         signInWithGoogle(location, navigate);
@@ -51,14 +45,13 @@ const Navigation = () => {
                 <Container>
                     <Toolbar disableGutters sx={{ display: 'flex', justifyContent: 'space-between' }}>
                         <Typography
-                            variant="h5"
-                            noWrap
-                            component="div"
-                            sx={{ mr: 2, display: { xs: 'flex' } }}
-                        >
-                            <Link to="/" className="link coloredTxt fwBold">Micro Blog</Link>
-                        </Typography>
-
+                                variant="h5"
+                                noWrap
+                                component="div"
+                                sx={{ ml: 1, mr: 2, display: { xs: 'flex' } }}
+                            >
+                                <Link to="/" className="link coloredTxt fwBold">Bloom</Link>
+                            </Typography>
                         <Box sx={{ flexGrow: 0, display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
                             {user.email ? <Box className="navName">
                                 <Typography>{user.displayName}</Typography>
