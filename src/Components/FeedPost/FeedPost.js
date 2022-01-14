@@ -6,7 +6,6 @@ import ShareIcon from '@mui/icons-material/Share';
 import { Box } from '@mui/system';
 import { EmailShareButton, FacebookShareButton, TelegramShareButton, TwitterShareButton, WhatsappShareButton } from "react-share";
 import { EmailIcon, FacebookIcon, TelegramIcon, TwitterIcon, WhatsappIcon } from "react-share";
-import { Link } from 'react-router-dom';
 import ArticleIcon from '@mui/icons-material/Article';
 import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
@@ -44,14 +43,19 @@ const FeedPost = ({ singlePost }) => {
     const handleClick = () => setMoreOpen((prev) => !prev);
     const handleClickAway = () => setMoreOpen(false);
     const [color, setColor] = useState('#aaa');
-    const link = `/${username}`;
-    const updatedLink = link.replace(/ /g, '');
 
-    const hashtags = ["#microblogsite", "#postoftheday"];
-    const related = ["@iftakher_hossen", "@microbblogsite"];
+    const hashtags = ["microblogsite", "postoftheday"];
+    const related = ["@iftakher_hossen", "@microbblogsite, @healyourselfbd"];
 
     const handleReaction = e => {
         setColor('red')
+    }
+    const handleRemoveReaction = e => {
+        setColor('#aaa')
+    }
+
+    const handleCopyBtn = (content) => {
+        navigator.clipboard.writeText(content);
     }
 
     return (
@@ -74,7 +78,7 @@ const FeedPost = ({ singlePost }) => {
                                         </IconButton>
                                     </Tooltip>
                                     <Tooltip title="Copy Text">
-                                        <IconButton aria-label="copy-post">
+                                        <IconButton aria-label="copy-post" onClick={() => handleCopyBtn(content)}>
                                             <ContentCopyIcon className="iconHover" />
                                         </IconButton>
                                     </Tooltip>
@@ -89,20 +93,18 @@ const FeedPost = ({ singlePost }) => {
                     </ClickAwayListener>
                 }
                 title={
-                    <Link to={updatedLink} className="link" >
-                        <Typography variant="body1" sx={{ mb: '-4px' }} className="fwBold">{username}</Typography>
-                    </Link>
+                    <Typography variant="body1" sx={{ mb: '-4px' }} className="fwBold">{username}</Typography>
                 }
                 subheader={
-                    <Typography variant="caption" sx={{ color: '#aaa', mt: 0, pt: 0 }}> {date}</Typography>
+                    <Typography variant="caption" sx={{ color: '#aaa', mt: 0, pt: 0 }}>{date}</Typography>
                 }
             />
             <CardContent>
                 <Typography variant="body1">{content}</Typography>
             </CardContent>
             <CardActions sx={{ justifyContent: 'flex-end' }}>
-                <IconButton onClick={handleReaction}>
-                    <FavoriteIcon className="redHover" sx={{ color: color }} />
+                <IconButton onClick={handleReaction} onDoubleClick={handleRemoveReaction}>
+                    <FavoriteIcon sx={{ color: color }} />
                 </IconButton>
                 <IconButton aria-label="share" onClick={handleModalOpen}>
                     <ShareIcon className="iconHover" />
@@ -131,7 +133,7 @@ const FeedPost = ({ singlePost }) => {
                         <TelegramShareButton url={`/${username}/posts/${_id}`} title={`${username} shared a post on micro blogsite`} className="shareBtn">
                             <TelegramIcon size={30} round={true} />
                         </TelegramShareButton>
-                        <TwitterShareButton url={`/${username}/posts/${_id}`} title={`${username} shared a post on micro blogsite`} via="Micro Blogsite" hashtags={hashtags} related={related} className="shareBtn">
+                        <TwitterShareButton url={`/${username}/posts/${_id}`} title={`${username} shared a post on micro blogsite`} via="MicroBlogsite" hashtags={hashtags} related={related} className="shareBtn">
                             <TwitterIcon size={30} round={true} />
                         </TwitterShareButton>
                         <WhatsappShareButton url={`/${username}/posts/${_id}`} separator=" " title={`${username} shared a post on micro blogsite`} className="shareBtn">

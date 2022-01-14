@@ -12,7 +12,13 @@ const Navigation = () => {
     const [success, setSuccess] = useState(false);
     const [openSnackbar, setOpenSnackbar] = useState(false);
     const location = useLocation();
+    const link = `/users/${user.displayName}`;
+    const updatedLink = link.replace(/ /g, '');
     const navigate = useNavigate();
+
+    const handleUserProfile = (data) => {
+        navigate(updatedLink, { state: data });
+    }
 
     const handleGoogleSignIn = () => {
         signInWithGoogle(location, navigate);
@@ -75,13 +81,13 @@ const Navigation = () => {
                     </Toolbar>
                 </Container>
             </AppBar>
-            {isLoading && <LinearProgress />}
-            {success && <Snackbar open={openSnackbar} autoHideDuration={3000} action={action}>
+            {isLoading && <LinearProgress sx={{ height: '2px' }} />}
+            {success && <Snackbar open={openSnackbar} autoHideDuration={2000} action={action}>
                 <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
                     Welcome, {user.displayName}
                 </Alert>
             </Snackbar>}
-            {authError && <Snackbar open={openSnackbar} autoHideDuration={4000} action={action}>
+            {authError && <Snackbar open={openSnackbar} autoHideDuration={3000} action={action}>
                 <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
                     {authError}
                 </Alert>

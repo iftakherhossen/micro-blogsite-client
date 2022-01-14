@@ -1,9 +1,12 @@
 /* Global CSS Start */
 .gridCard {
-  margin: 1.5rem 0.5rem !important;
-  background-color: white;
-  padding: 10px;
+  margin: 0.28rem 0 !important;
+  padding: 10px 7px;
   height: 100%;
+}
+
+.border {
+  border: 2px solid #0693E3;
 }
 
 .coloredTxt {
@@ -57,10 +60,6 @@
   color: red !important;
 }
 
-.redHover:hover {
-  color: red;
-}
-
 .iconHover:hover {
   color: #0693E3;
 }
@@ -72,8 +71,16 @@
 .mark {
   color: #0693E3;
 }
+
 .mark:hover {
   text-decoration: underline;
+}
+
+.txtCard {
+  margin: 0.4rem;
+  box-shadow: none !important;
+  padding: 4rem 2rem;
+  text-align: center;
 }
 
 /* Global CSS End */
@@ -113,10 +120,12 @@
 .userInfoGridCard {
   display: flex !important;
   flex-direction: column !important;
+  text-align: center;
+  padding: 0.7em 0;
 }
 
 .userInfoGrid {
-  margin: 1.5rem 0.5rem 0 !important;
+  margin: 0.7rem 0.5rem 0 !important;
   background-color: white;
   padding: 10px;
 }
@@ -180,6 +189,7 @@
 }
 
 /* Footer Component CSS End */
+
 
 /* Responsive for Footer Component CSS Start */
 /* Mobile Design Start */

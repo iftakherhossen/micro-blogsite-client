@@ -5,7 +5,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: #E6ECF0;
   min-height: 100vh;
-  /* user-select: none; */
+  user-select: none;
 }
 
 code {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Grid, } from '@mui/material';
+import { Container, Grid } from '@mui/material';
 import Navigation from '../../Components/Navigation/Navigation';
 import WritePost from '../../Components/WritePost/WritePost';
 import PostFeed from '../../Components/PostFeed/PostFeed';

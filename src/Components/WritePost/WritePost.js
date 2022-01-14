@@ -80,7 +80,7 @@ const WritePost = () => {
                                 id="standard-multiline-static"
                                 multiline
                                 rows={5}
-                                sx={{ width: '100%' }}
+                                sx={{ width: '100%', userSelect: 'text' }}
                                 placeholder="Write what's on your mind!"
                                 {...register("content", { required: true })}
                                 inputProps={{ maxLength: 200 }}
