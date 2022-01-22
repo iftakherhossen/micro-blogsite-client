@@ -1,4 +1,4 @@
-import {  Box, Grid, List } from '@mui/material';
+import { Box, Grid, List } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import User from '../User/User';
 
@@ -6,7 +6,7 @@ const UserInfo = () => {
     const [users, setUsers] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:5000/users')
+        fetch('https://shrouded-eyrie-37217.herokuapp.com/users')
             .then(res => res.json())
             .then(data => setUsers(data));
     }, []);

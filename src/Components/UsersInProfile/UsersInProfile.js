@@ -7,7 +7,7 @@ const UsersInProfile = () => {
     const [users, setUsers] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:5000/users')
+        fetch('https://shrouded-eyrie-37217.herokuapp.com/users')
             .then(res => res.json())
             .then(data => setUsers(data));
     }, [])

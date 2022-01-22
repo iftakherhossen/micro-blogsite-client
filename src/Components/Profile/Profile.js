@@ -8,7 +8,7 @@ const Profile = ({ userData }) => {
     const [userPost, setUserPost] = useState([]);
 
     useEffect(() => {
-        fetch(`http://localhost:5000/posts/${userData.email}`)
+        fetch(`https://shrouded-eyrie-37217.herokuapp.com/posts/${userData.email}`)
             .then(res => res.json())
             .then(data => setUserPost(data));
     }, [userData.email])

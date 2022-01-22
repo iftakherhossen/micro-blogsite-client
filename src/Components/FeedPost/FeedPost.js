@@ -11,6 +11,7 @@ import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import DeleteIcon from '@mui/icons-material/Delete';
 import useAuth from '../../hooks/useAuth';
+import ReactHashtag from "react-hashtag";
 
 const modalStyle = {
     position: 'absolute',
@@ -60,6 +61,7 @@ const FeedPost = ({ singlePost, handleDelete }) => {
     const handleCopyBtn = (content) => {
         navigator.clipboard.writeText(content);
     }
+    const mainLink = "https://bloom-micro-blogsite.web.app";
 
     return (
         <Card sx={{ width: 1, mt: 1, mb: 2 }}>
@@ -110,7 +112,9 @@ const FeedPost = ({ singlePost, handleDelete }) => {
                 }
             />
             <CardContent>
-                <Typography variant="body1">{content}</Typography>
+                <Typography variant="body1">
+                    <ReactHashtag>{content}</ReactHashtag>
+                </Typography>
             </CardContent>
             <CardActions sx={{ justifyContent: 'flex-end' }}>
                 <IconButton onClick={handleReaction} onDoubleClick={handleRemoveReaction}>
@@ -134,19 +138,19 @@ const FeedPost = ({ singlePost, handleDelete }) => {
                         Share this Post
                     </Typography>
                     <Box sx={{ mt: 1 }}>
-                        <EmailShareButton url={`/${username}/posts/${_id}`} subject="Sharing Post via Email" body={`${username} shared a post on micro blogsite`} separator=" " className="shareBtn">
+                        <EmailShareButton url={`${mainLink}/${username}/posts/${_id}`} subject="Sharing Post via Email" body={`${username} shared a post on micro blogsite`} separator=" " className="shareBtn">
                             <EmailIcon size={30} round={true} />
                         </EmailShareButton>
-                        <FacebookShareButton url={`/${username}/posts/${_id}`} title={`${username} shared a post on micro blogsite`} hashtags={hashtags} className="shareBtn">
+                        <FacebookShareButton url={`${mainLink}/posts/${_id}`} title={`${username} shared a post on micro blogsite`} hashtags={hashtags} className="shareBtn">
                             <FacebookIcon size={30} round={true} />
                         </FacebookShareButton>
-                        <TelegramShareButton url={`/${username}/posts/${_id}`} title={`${username} shared a post on micro blogsite`} className="shareBtn">
+                        <TelegramShareButton url={`${mainLink}/posts/${_id}`} title={`${username} shared a post on micro blogsite`} className="shareBtn">
                             <TelegramIcon size={30} round={true} />
                         </TelegramShareButton>
-                        <TwitterShareButton url={`/${username}/posts/${_id}`} title={`${username} shared a post on micro blogsite`} via="MicroBlogsite" hashtags={hashtags} related={related} className="shareBtn">
+                        <TwitterShareButton url={`${mainLink}/posts/${_id}`} title={`${username} shared a post on micro blogsite`} via="MicroBlogsite" hashtags={hashtags} related={related} className="shareBtn">
                             <TwitterIcon size={30} round={true} />
                         </TwitterShareButton>
-                        <WhatsappShareButton url={`/${username}/posts/${_id}`} separator=" " title={`${username} shared a post on micro blogsite`} className="shareBtn">
+                        <WhatsappShareButton url={`${mainLink}/posts/${_id}`} separator=" " title={`${username} shared a post on micro blogsite`} className="shareBtn">
                             <WhatsappIcon size={30} round={true} />
                         </WhatsappShareButton>
                     </Box>

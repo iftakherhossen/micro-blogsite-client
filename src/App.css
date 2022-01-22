@@ -75,6 +75,11 @@
   text-align: center;
 }
 
+span {
+  color: #0693E3;
+}
+
+
 /* Global CSS End */
 
 
@@ -148,6 +153,10 @@
   padding-top: 5px;
 }
 
+.profileBorder {
+  border-right: 4px solid #0693E3 !important;
+}
+
 /* User Info Component CSS End */
 
 /* Footer Component CSS Start */
@@ -219,6 +228,7 @@
   .listWrapper {
     display: grid;
     grid-template-columns: auto auto;
+    grid-gap: 10px;
   }
 }
 
@@ -229,6 +239,8 @@
   .listWrapper {
     display: grid;
     grid-template-columns: auto auto auto;
+    grid-column-gap: 10px;
+    grid-row-gap: 3px;
   }
 }
 

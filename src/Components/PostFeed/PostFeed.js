@@ -9,7 +9,7 @@ const PostFeed = () => {
     const [openSnackbar, setOpenSnackbar] = useState(false);
 
     useEffect(() => {
-        fetch('http://localhost:5000/posts')
+        fetch('https://shrouded-eyrie-37217.herokuapp.com/posts')
             .then(res => res.json())
             .then(data => setPost(data));
     }, []);
@@ -34,7 +34,7 @@ const PostFeed = () => {
     );
 
     const handleDelete = (id) => {
-        const url = `http://localhost:5000/posts/${id}`
+        const url = `https://shrouded-eyrie-37217.herokuapp.com/posts/${id}`
         fetch(url, {
             method: 'DELETE'
         })
