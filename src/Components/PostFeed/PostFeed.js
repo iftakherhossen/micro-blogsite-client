@@ -4,9 +4,16 @@ import FeedPost from '../FeedPost/FeedPost';
 import CloseIcon from '@mui/icons-material/Close';
 
 const PostFeed = () => {
+    const [users, setUsers] = useState([]);
     const [post, setPost] = useState([]);
     const [success, setSuccess] = useState(false)
     const [openSnackbar, setOpenSnackbar] = useState(false);
+
+    useEffect(() => {
+        fetch('https://shrouded-eyrie-37217.herokuapp.com/users')
+            .then(res => res.json())
+            .then(data => setUsers(data));
+    }, []);
 
     useEffect(() => {
         fetch('https://shrouded-eyrie-37217.herokuapp.com/posts')

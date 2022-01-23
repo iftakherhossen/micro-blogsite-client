@@ -53,11 +53,13 @@ const Navigation = () => {
                                 <Link to="/" className="link coloredTxt fwBold">Bloom</Link>
                             </Typography>
                         <Box sx={{ flexGrow: 0, display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
-                            {user.email ? <Box className="navName">
-                                <Typography>{user.displayName}</Typography>
-                            </Box> : <Box className="navName">
-                                <Typography>Welcome, User</Typography>
-                            </Box>}
+                            <Box className="hidingName">
+                                {user.email ? <Box className="navName">
+                                    <Typography>{user.displayName}</Typography>
+                                </Box> : <Box className="navName">
+                                    <Typography>Welcome, User</Typography>
+                                </Box>}
+                            </Box>
                             &nbsp; &nbsp;
                             {user.email ? <Tooltip title="Sign Out">
                                 <IconButton onClick={logOut}>
@@ -75,7 +77,7 @@ const Navigation = () => {
                 </Container>
             </AppBar>
             {isLoading && <LinearProgress sx={{ height: '2px' }} />}
-            {success && <Snackbar open={openSnackbar} autoHideDuration={2000} action={action}>
+            {user.displayName && success && <Snackbar open={openSnackbar} autoHideDuration={2000} action={action}>
                 <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
                     Welcome, {user.displayName}
                 </Alert>

@@ -51,6 +51,7 @@ const WritePost = () => {
         }
         setOpenSnackbar(false);
     };
+
     const action = (
         <>
             <IconButton

@@ -37,7 +37,7 @@ const moreBtnPortalStyle = {
     justifyContent: 'flex-start'
 };
 
-const FeedPost = ({ singlePost, handleDelete }) => {
+const FeedPost = ({ singlePost, handleDelete, folk }) => {
     const { _id, username, email, date, img, content } = singlePost;
     const { user } = useAuth();
     const [modalOpen, setModalOpen] = useState(false);
@@ -47,7 +47,7 @@ const FeedPost = ({ singlePost, handleDelete }) => {
     const handleClick = () => setMoreOpen((prev) => !prev);
     const handleClickAway = () => setMoreOpen(false);
     const [color, setColor] = useState('#aaa');
-
+    const mainLink = "https://bloom-micro-blogsite.web.app";
     const hashtags = ["bloom", "microblogsite", "postoftheday"];
     const related = ["@iftakher_hossen", "@microbblogsite, @healyourselfbd"];
 
@@ -61,7 +61,6 @@ const FeedPost = ({ singlePost, handleDelete }) => {
     const handleCopyBtn = (content) => {
         navigator.clipboard.writeText(content);
     }
-    const mainLink = "https://bloom-micro-blogsite.web.app";
 
     return (
         <Card sx={{ width: 1, mt: 1, mb: 2 }}>
@@ -93,7 +92,7 @@ const FeedPost = ({ singlePost, handleDelete }) => {
                                         <IconButton aria-label="copy-post" onClick={() => handleCopyBtn(content)}>
                                             <ContentCopyIcon className="iconHover" />
                                         </IconButton>
-                                    </Tooltip>                                    
+                                    </Tooltip>
                                     <Tooltip title="Save Post">
                                         <IconButton aria-label="save-post">
                                             <LibraryAddIcon className="iconHover" />
@@ -113,7 +112,9 @@ const FeedPost = ({ singlePost, handleDelete }) => {
             />
             <CardContent>
                 <Typography variant="body1">
-                    <ReactHashtag>{content}</ReactHashtag>
+                    <ReactHashtag>
+                        {content}
+                    </ReactHashtag>
                 </Typography>
             </CardContent>
             <CardActions sx={{ justifyContent: 'flex-end' }}>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Grid } from '@mui/material';
+import { CircularProgress, Container, Grid } from '@mui/material';
 import Navigation from '../../Components/Navigation/Navigation';
 import Footer from '../../Components/Footer/Footer';
 import Profile from '../../Components/Profile/Profile';

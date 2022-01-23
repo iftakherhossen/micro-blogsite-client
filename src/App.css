@@ -79,7 +79,6 @@ span {
   color: #0693E3;
 }
 
-
 /* Global CSS End */
 
 
@@ -157,6 +156,43 @@ span {
   border-right: 4px solid #0693E3 !important;
 }
 
+.gameBanner {
+  position: relative;
+  margin-bottom: 15px;
+}
+
+.hoverBanner {
+  opacity: 1 !important;
+  display: block !important;
+  width: 80% !important;
+  margin: 0 auto !important;
+  transition: .5s ease !important;
+  backface-visibility: hidden !important;
+}
+
+.hoverMiddle {
+  transition: .5s ease !important;
+  opacity: 0 !important;
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  -ms-transform: translate(-50%, -50%) !important;
+  text-align: center !important;
+}
+
+.hoverBtn {
+  width: 100% !important;
+}
+
+.gameBanner:hover .hoverBanner {
+  opacity: 0.3 !important;
+}
+
+.gameBanner:hover .hoverMiddle {
+  opacity: 1 !important;
+}
+
 /* User Info Component CSS End */
 
 /* Footer Component CSS Start */
@@ -199,6 +235,14 @@ span {
     display: grid !important;
     grid-template-columns: auto !important;
   }
+
+  .hidingName {
+    display: none;
+  }
+
+  .hoverBanner {
+    width: 60% !important;
+  }
 }
 
 @media only screen and (max-width: 600px) {
@@ -230,6 +274,15 @@ span {
     grid-template-columns: auto auto;
     grid-gap: 10px;
   }
+
+  .gameWrapper {
+    display: grid !important;
+    grid-template-columns: auto auto;
+  }
+
+  .hoverBanner {
+    width: 80% !important;
+  }
 }
 
 /* Mobile Design End */
@@ -241,6 +294,15 @@ span {
     grid-template-columns: auto auto auto;
     grid-column-gap: 10px;
     grid-row-gap: 3px;
+  }
+
+  .gameWrapper {
+    display: grid !important;
+    grid-template-columns: auto auto;
+  }
+
+  .hoverBanner {
+    width: 70% !important;
   }
 }
 
