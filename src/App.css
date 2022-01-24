@@ -1,7 +1,7 @@
 /* Global CSS Start */
 .gridCard {
-  margin: 0.28rem 0 !important;
-  padding: 10px 7px;
+  margin: 0.30rem 0 !important;
+  padding: 5px 7px;
   height: 100%;
 }
 
@@ -78,7 +78,6 @@
 span {
   color: #0693E3;
 }
-
 /* Global CSS End */
 
 
@@ -117,11 +116,11 @@ span {
   display: flex !important;
   flex-direction: column !important;
   text-align: center;
-  padding: 0.7em 0;
+  padding: 0.1rem 0;
 }
 
 .userInfoGrid {
-  margin: 0.7rem 0.5rem 0 !important;
+  margin: 1rem 0.5rem 0 !important;
   background-color: white;
   padding: 10px;
 }
@@ -143,6 +142,9 @@ span {
   cursor: pointer;
 }
 
+.listItem {
+  cursor: pointer !important;
+}
 .userProfile:hover {
   box-shadow: 0 2px 8px #ddd;
 }

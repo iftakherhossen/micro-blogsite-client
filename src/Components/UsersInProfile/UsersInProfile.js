@@ -10,7 +10,7 @@ const UsersInProfile = () => {
         fetch('https://shrouded-eyrie-37217.herokuapp.com/users')
             .then(res => res.json())
             .then(data => setUsers(data));
-    }, [])
+    }, []);
 
     return (
         <Grid item xs={12} sm={12} md={3} className="userInfoGridCard">

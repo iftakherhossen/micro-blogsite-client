@@ -12,6 +12,8 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import DeleteIcon from '@mui/icons-material/Delete';
 import useAuth from '../../hooks/useAuth';
 import ReactHashtag from "react-hashtag";
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+import { useNavigate } from 'react-router-dom';
 
 const modalStyle = {
     position: 'absolute',
@@ -28,7 +30,7 @@ const modalStyle = {
 const moreBtnPortalStyle = {
     position: 'absolute',
     top: 30,
-    right: 75,
+    right: 115,
     zIndex: 1,
     p: 1,
     width: '100%',
@@ -37,7 +39,7 @@ const moreBtnPortalStyle = {
     justifyContent: 'flex-start'
 };
 
-const FeedPost = ({ singlePost, handleDelete, folk }) => {
+const FeedPost = ({ singlePost, handleDelete }) => {
     const { _id, username, email, date, img, content } = singlePost;
     const { user } = useAuth();
     const [modalOpen, setModalOpen] = useState(false);
@@ -50,6 +52,10 @@ const FeedPost = ({ singlePost, handleDelete, folk }) => {
     const mainLink = "https://bloom-micro-blogsite.web.app";
     const hashtags = ["bloom", "microblogsite", "postoftheday"];
     const related = ["@iftakher_hossen", "@microbblogsite, @healyourselfbd"];
+    const navigate = useNavigate();
+    const viewLink = `/${username}/posts/${_id}`;
+    const viewPostLink = viewLink.replace(/ /g, '');
+    const [savedPost, setSavedPost] = useState([]);
 
     const handleReaction = e => {
         setColor('red')
@@ -60,6 +66,22 @@ const FeedPost = ({ singlePost, handleDelete, folk }) => {
 
     const handleCopyBtn = (content) => {
         navigator.clipboard.writeText(content);
+    }
+
+    const handleViewPost = (_id, username, email, date, img, content) => {
+        const singlePost = { _id, username, email, date, img, content };
+        navigate(viewPostLink, { state: singlePost });
+        console.log(singlePost)
+    }
+
+    const handleSavePost = (_id, username, email, date, img, content) => {
+        const postData = { _id, username, email, date, img, content };
+        console.log(postData);
+        setSavedPost(postData);
+    }
+
+    const handleViewProfile = () => {
+
     }
 
     return (
@@ -88,13 +110,18 @@ const FeedPost = ({ singlePost, handleDelete, folk }) => {
                                                 </IconButton>
                                             </Tooltip>
                                     }
+                                    <Tooltip title="View Post">
+                                        <IconButton aria-label="copy-post" onClick={() => handleViewPost(_id, username, email, date, img, content)}>
+                                            <OpenInNewIcon className="iconHover" />
+                                        </IconButton>
+                                    </Tooltip>
                                     <Tooltip title="Copy Text">
                                         <IconButton aria-label="copy-post" onClick={() => handleCopyBtn(content)}>
                                             <ContentCopyIcon className="iconHover" />
                                         </IconButton>
                                     </Tooltip>
                                     <Tooltip title="Save Post">
-                                        <IconButton aria-label="save-post">
+                                        <IconButton aria-label="save-post" onClick={() => handleSavePost(_id, username, email, date, img, content)}>
                                             <LibraryAddIcon className="iconHover" />
                                         </IconButton>
                                     </Tooltip>
@@ -104,7 +131,7 @@ const FeedPost = ({ singlePost, handleDelete, folk }) => {
                     </ClickAwayListener>
                 }
                 title={
-                    <Typography variant="body1" sx={{ mb: '-4px' }} className="fwBold">{username}</Typography>
+                    <Typography variant="body1" sx={{ mb: '-4px' }} className="fwBold" onClick={() => handleViewProfile()}>{username}</Typography>
                 }
                 subheader={
                     <Typography variant="caption" sx={{ color: '#aaa', mt: 0, pt: 0 }}>{date}</Typography>

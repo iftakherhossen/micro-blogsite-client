@@ -25,7 +25,7 @@ const User = ({ folk }) => {
     return (
         <ListItem className={"listItem userProfile " + (user.displayName === displayName && "profileBorder")} sx={{ px: 1 }} onClick={() => handleUserProfile(folk)}>
             <ListItemAvatar sx={{ my: '1px', p: 0 }}>
-                <Avatar alt="User Avatar" src={photoURL} />
+                <Avatar alt={displayName} src={photoURL} />
             </ListItemAvatar>
             <ListItemText sx={{ my: '1px', p: 0 }}>
                 <Typography sx={{ fontSize: '0.9em', fontWeight: 600, mb: '-4px', color: 'black' }}>
