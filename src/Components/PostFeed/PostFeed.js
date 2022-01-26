@@ -20,7 +20,7 @@ const PostFeed = () => {
         }
         setOpenSnackbar(false);
     };
-    
+
     const action = (
         <>
             <IconButton
@@ -35,15 +35,14 @@ const PostFeed = () => {
     );
 
     const handleDelete = (id) => {
-        const url = `https://shrouded-eyrie-37217.herokuapp.com/posts/${id}`
-        fetch(url, {
-            method: 'DELETE'
-        })
-            .then(res => res.json())
-            .then(data => {
-                const confirm = window.confirm('Are you sure? You wanna delete your post!')
+        const confirm = window.confirm('Are you sure? You wanna delete your post!');
 
-                if (confirm === true) {
+        if (confirm === true) {
+            fetch(`https://shrouded-eyrie-37217.herokuapp.com/posts/${id}`, {
+                method: 'DELETE'
+            })
+                .then(res => res.json())
+                .then(data => {
                     if (data.deletedCount) {
                         setSuccess(true);
                         setOpenSnackbar(true);
@@ -51,12 +50,11 @@ const PostFeed = () => {
                         setPost(remaining);
                         window.location.reload();
                     }
-                }
-                else {
-                    setPost(data);
-                    window.location.reload();
-                }
-            })
+                })
+        }
+        else {
+            window.location.reload();
+        }
     }
 
 
