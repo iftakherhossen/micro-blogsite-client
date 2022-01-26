@@ -13,7 +13,7 @@ const UsersInProfile = () => {
     }, []);
 
     return (
-        <Grid item xs={12} sm={12} md={3} className="userInfoGridCard">
+        <Grid item xs={12} sm={12} md={3} className="userInfoGridCard" data-aos="fade-left">
             <Box className="userInfoGrid">
                 <Box className="wrapper" sx={{ p: 0 }}>
                     <Box>

@@ -6,6 +6,7 @@ import HashTags from '../HashTags/HashTags';
 import useAuth from '../../hooks/useAuth';
 import ErrorIcon from '@mui/icons-material/Error';
 import CloseIcon from '@mui/icons-material/Close';
+import ContactInfo from '../ContactInfo/ContactInfo';
 
 const WritePost = () => {
     const { user, isLoading } = useAuth();
@@ -66,14 +67,14 @@ const WritePost = () => {
     );
 
     return (
-        <Grid item xs={12} sm={12} md={3.5} className="userInfoGridCard">
+        <Grid item xs={12} sm={12} md={3.5} className="userInfoGridCard" data-aos="fade-right">
             <Box className="userInfoGrid">
                 <Box className="wrapper">
                     <Box className="alignCenter">
                         <Avatar alt={user.displayName} src={user.photoURL} className="avatar" />
                     </Box>
                     <Box className="userName">
-                        <Typography variant="h6">{user.displayName}</Typography>
+                        <Typography variant="h6">{user?.displayName}</Typography>
                     </Box>
                     {!isLoading && <form onSubmit={handleSubmit(onSubmit)}>
                         <Box className="multilineTextField">
@@ -85,17 +86,22 @@ const WritePost = () => {
                                 placeholder="Write what's on your mind!"
                                 {...register("content", { required: true })}
                                 inputProps={{ maxLength: 200 }}
+                                disabled={!user?.email}
                             />
                         </Box>
                         <Box className="writePostFooter">
-                            {errors.content && <Tooltip title="Type Something!" placement="left"><span><ErrorIcon sx={{ color: 'red', fontSize: '1.5em' }} /></span></Tooltip>} &nbsp; &nbsp;
-                            <Typography sx={{ color: 'red', fontSize: '0.8em' }}>Max Length 200 Characters *</Typography>
-                            <button type="submit" className="postBtn" disabled={!user.email}>Post</button>
+                            {
+                                errors.content && <Tooltip title="Type Something!" placement="left"><span><ErrorIcon sx={{ color: 'red', fontSize: '1.5em' }} /></span></Tooltip>
+                            }
+                            &nbsp; &nbsp;
+                            <Typography sx={{ color: 'red', fontSize: '0.8em' }}>Max Length 200 Characters</Typography>
+                            <button type="submit" className="postBtn" disabled={!user?.email}>Post</button>
                         </Box>
                     </form>}
                 </Box>
             </Box>
             <HashTags />
+            <ContactInfo />
             {postSuccess && <Snackbar open={openSnackbar} autoHideDuration={2000} action={action}>
                 <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
                     Post created successfully!

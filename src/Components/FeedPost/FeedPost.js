@@ -1,4 +1,4 @@
-import { Avatar, Card, CardActions, CardContent, CardHeader, ClickAwayListener, IconButton, Modal, Tooltip, Typography } from '@mui/material';
+import { Alert, Avatar, Card, CardActions, CardContent, CardHeader, ClickAwayListener, IconButton, Modal, Snackbar, TextField, Tooltip, Typography } from '@mui/material';
 import React, { useState } from 'react';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -11,9 +11,11 @@ import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import DeleteIcon from '@mui/icons-material/Delete';
 import useAuth from '../../hooks/useAuth';
-import ReactHashtag from "react-hashtag";
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { useNavigate } from 'react-router-dom';
+import Linkify from 'react-linkify';
+import EditIcon from '@mui/icons-material/Edit';
+import CloseIcon from '@mui/icons-material/Close';
 
 const modalStyle = {
     position: 'absolute',
@@ -25,6 +27,16 @@ const modalStyle = {
     boxShadow: 24,
     p: 3,
     textAlign: 'center'
+};
+const editModalStyle = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 350,
+    bgcolor: '#E6ECF0',
+    boxShadow: 24,
+    p: 3
 };
 
 const moreBtnPortalStyle = {
@@ -42,10 +54,16 @@ const moreBtnPortalStyle = {
 const FeedPost = ({ singlePost, handleDelete }) => {
     const { _id, username, email, date, img, content } = singlePost;
     const { user } = useAuth();
-    const [modalOpen, setModalOpen] = useState(false);
+    const [shareModalOpen, setShareModalOpen] = useState(false);
+    const [editedContent, setEditedContent] = useState('');
+    const [editSuccess, setEditSuccess] = useState(false);
+    const [openSnackbar, setOpenSnackbar] = useState(false);
+    const [editModalOpen, setEditModalOpen] = useState(false);
     const [moreOpen, setMoreOpen] = useState(false);
-    const handleModalOpen = () => setModalOpen(true);
-    const handleModalClose = () => setModalOpen(false);
+    const handleShareModalOpen = () => setShareModalOpen(true);
+    const handleShareModalClose = () => setShareModalOpen(false);
+    const handleEditModalOpen = () => setEditModalOpen(true);
+    const handleEditModalClose = () => setEditModalOpen(false);
     const handleClick = () => setMoreOpen((prev) => !prev);
     const handleClickAway = () => setMoreOpen(false);
     const [color, setColor] = useState('#aaa');
@@ -71,7 +89,7 @@ const FeedPost = ({ singlePost, handleDelete }) => {
     const handleViewPost = (_id, username, email, date, img, content) => {
         const singlePost = { _id, username, email, date, img, content };
         navigate(viewPostLink, { state: singlePost });
-        console.log(singlePost)
+        console.log(singlePost);
     }
 
     const handleSavePost = (_id, username, email, date, img, content) => {
@@ -81,8 +99,46 @@ const FeedPost = ({ singlePost, handleDelete }) => {
     }
 
     const handleViewProfile = () => {
-
+        console.log("clicked")
     }
+
+    const handleEditPost = () => {
+        handleEditModalOpen();
+        fetch(`https://shrouded-eyrie-37217.herokuapp.com/posts/${_id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(editedContent)
+        })
+            .then(res => res.json())
+            .then(result => {
+                if (result.insertedId) {
+                    setEditSuccess(true);
+                    setOpenSnackbar(true);
+                }
+            })
+    }
+
+    const handleSnackbarClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpenSnackbar(false);
+    };
+
+    const action = (
+        <>
+            <IconButton
+                size="small"
+                aria-label="close"
+                color="inherit"
+                onClick={handleSnackbarClose}
+            >
+                <CloseIcon fontSize="small" />
+            </IconButton>
+        </>
+    );
 
     return (
         <Card sx={{ width: 1, mt: 1, mb: 2 }}>
@@ -99,7 +155,7 @@ const FeedPost = ({ singlePost, handleDelete }) => {
                             {moreOpen ? (
                                 <Box sx={moreBtnPortalStyle}>
                                     {
-                                        user.email === email ? <Tooltip title="Delete Post">
+                                        user?.email === email ? <Tooltip title="Delete Post">
                                             <IconButton aria-label="delete-post" onClick={() => handleDelete(_id)}>
                                                 <DeleteIcon className="redHover" />
                                             </IconButton>
@@ -120,11 +176,20 @@ const FeedPost = ({ singlePost, handleDelete }) => {
                                             <ContentCopyIcon className="iconHover" />
                                         </IconButton>
                                     </Tooltip>
-                                    <Tooltip title="Save Post">
-                                        <IconButton aria-label="save-post" onClick={() => handleSavePost(_id, username, email, date, img, content)}>
-                                            <LibraryAddIcon className="iconHover" />
-                                        </IconButton>
-                                    </Tooltip>
+                                    {
+                                        user?.email === email ?
+                                            <Tooltip title="Edit Post">
+                                                <IconButton aria-label="edit-post" onClick={() => handleEditPost(_id, content)}>
+                                                    <EditIcon className="iconHover" />
+                                                </IconButton>
+                                            </Tooltip>
+                                            :
+                                            <Tooltip title="Save Post">
+                                                <IconButton aria-label="save-post" onClick={() => handleSavePost(_id, username, email, date, img, content)}>
+                                                    <LibraryAddIcon className="iconHover" />
+                                                </IconButton>
+                                            </Tooltip>
+                                    }
                                 </Box>
                             ) : null}
                         </Box>
@@ -138,26 +203,65 @@ const FeedPost = ({ singlePost, handleDelete }) => {
                 }
             />
             <CardContent>
-                <Typography variant="body1">
-                    <ReactHashtag>
+                <Typography variant="body1" sx={{ wordWrap: 'break-word' }}>
+                    <Linkify>
                         {content}
-                    </ReactHashtag>
+                    </Linkify>
                 </Typography>
             </CardContent>
             <CardActions sx={{ justifyContent: 'flex-end' }}>
                 <IconButton onClick={handleReaction} onDoubleClick={handleRemoveReaction}>
                     <FavoriteIcon sx={{ color: color }} />
                 </IconButton>
-                <IconButton aria-label="share" onClick={handleModalOpen}>
+                <IconButton aria-label="share" onClick={handleShareModalOpen}>
                     <ShareIcon className="iconHover" />
                 </IconButton>
             </CardActions>
 
 
-            {/* Modal Start */}
+            {/* Edit Modal Start */}
             <Modal
-                open={modalOpen}
-                onClose={handleModalClose}
+                open={editModalOpen}
+                onClose={handleEditModalClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Card sx={editModalStyle}>
+                        <CardHeader
+                            avatar={
+                                <Avatar alt={username} src={img} sx={{ bgcolor: "#0693E3" }} />
+                            }
+                            title={
+                                <Typography variant="body1" sx={{ mb: '-4px' }} className="fwBold" onClick={() => handleViewProfile()}>{username}</Typography>
+                            }
+                            subheader={
+                                <Typography variant="caption" sx={{ color: '#aaa', mt: 0, pt: 0 }}>{date}</Typography>
+                            }
+                        />
+                        <CardContent>
+                            <form onSubmit={handleEditPost}>
+                                <TextField
+                                    id="standard-multiline-static"
+                                    multiline
+                                    rows={4}
+                                    defaultValue={content}
+                                    sx={{ width: '100%', userSelect: 'text' }}
+                                    placeholder="Write what's on your mind!"
+                                    // {...register("content", { required: true })}
+                                    inputProps={{ maxLength: 200 }}
+                                    onChange={e => setEditedContent(e.target.value)}
+                                />
+                                <Box sx={{ textAlign: 'right' }}><button type="submit" className="editBtn" disabled={!editedContent}>Post</button></Box>
+                            </form>
+                        </CardContent>
+                    </Card>
+            </Modal>
+            {/* Edit Modal End */}
+
+            {/* Share Modal Start */}
+            <Modal
+                open={shareModalOpen}
+                onClose={handleShareModalClose}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
@@ -184,7 +288,13 @@ const FeedPost = ({ singlePost, handleDelete }) => {
                     </Box>
                 </Box>
             </Modal>
-            {/* Modal End */}
+            {/* Share Modal End */}
+
+            {editSuccess && <Snackbar open={openSnackbar} autoHideDuration={2000} action={action}>
+                <Alert onClose={handleSnackbarClose} severity="success" sx={{ width: '100%' }}>
+                    Post updated successfully!
+                </Alert>
+            </Snackbar>}
         </Card >
     );
 };

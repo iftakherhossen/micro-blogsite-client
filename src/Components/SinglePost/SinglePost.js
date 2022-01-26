@@ -90,7 +90,7 @@ const SinglePost = ({ singlePost, handleDelete }) => {
                                 {moreOpen ? (
                                     <Box sx={moreBtnPortalStyle}>
                                         {
-                                            user.email === email ? <Tooltip title="Delete Post">
+                                            user?.email === email ? <Tooltip title="Delete Post">
                                                 <IconButton aria-label="delete-post" onClick={() => handleDelete(_id)}>
                                                     <DeleteIcon className="redHover" />
                                                 </IconButton>

@@ -16,8 +16,8 @@ const UserProfile = () => {
             <Navigation />
             <Container>
                 <Grid container>
-                    <Profile userData={userData}  />
-                    <MyPosts userData={userData}  />
+                    <Profile userData={userData} />
+                    <MyPosts userData={userData} />
                     <UsersInProfile />
                 </Grid>
             </Container>

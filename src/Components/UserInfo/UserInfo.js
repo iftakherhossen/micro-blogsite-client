@@ -15,7 +15,7 @@ const UserInfo = () => {
     }, []);
 
     return (
-        <Grid item xs={12} sm={12} md={3} className="userInfoGridCard">
+        <Grid item xs={12} sm={12} md={3} className="userInfoGridCard" data-aos="fade-left">
             <Box className="userInfoGrid">
                 <Box className="wrapper" sx={{ p: 0 }}>
                     <List className="listWrapper">
@@ -36,15 +36,15 @@ const UserInfo = () => {
                             <img src={gameBanner1} alt="Tic Tac Toe" className="hoverBanner" />
                             <Box className="hoverMiddle">
                                 <Button variant="contained" className="hoverBtn">
-                                    <a href="https://simple-responsive-tic-tac-toe.netlify.app/" target="_blank" rel="noreferrer" style={{ color: 'white', textDecoration: 'none', display: 'flex', alignItems: 'center', fontWeight: 'bold' }}>Play <PlayArrowIcon /></a>
+                                    <a href="https://simple-responsive-tic-tac-toe.netlify.app/" target="_blank" rel="noopener noreferrer" style={{ color: 'white', textDecoration: 'none', display: 'flex', alignItems: 'center', fontWeight: 'bold' }}>Play <PlayArrowIcon /></a>
                                 </Button>
                             </Box>
                         </Box>
                         <Box className="gameBanner">
-                            <img src={gameBanner2} alt="Tic Tac Toe" className="hoverBanner" />
+                            <img src={gameBanner2} alt="Jump Over" className="hoverBanner" />
                             <Box className="hoverMiddle">
                                 <Button variant="contained" className="hoverBtn">
-                                    <a href="https://jump-over-iftakher.netlify.app/" target="_blank" rel="noreferrer" style={{ color: 'white', textDecoration: 'none', display: 'flex', alignItems: 'center', fontWeight: 'bold' }}>Play <PlayArrowIcon /></a>
+                                    <a href="https://jump-over-iftakher.netlify.app/" target="_blank" rel="noopener noreferrer" style={{ color: 'white', textDecoration: 'none', display: 'flex', alignItems: 'center', fontWeight: 'bold' }}>Play <PlayArrowIcon /></a>
                                 </Button>
                             </Box>
                         </Box>

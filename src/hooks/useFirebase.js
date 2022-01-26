@@ -14,15 +14,13 @@ const useFirebase = () => {
     const googleProvider = new GoogleAuthProvider();
 
     // google sign in
-    const signInWithGoogle = (location, navigate) => {
+    const signInWithGoogle = () => {
         setIsLoading(true);
         signInWithPopup(auth, googleProvider)
             .then((result) => {
                 const user = result.user;
-                saveUser(user.email, user.displayName, user.photoURL, "PUT");
+                saveUser(user.email, user.displayName, user.photoURL);
                 setAuthError("");
-                const destination = location?.state?.from || "/";
-                navigate(destination);
             })
             .catch((error) => {
                 setAuthError(error.message);
@@ -52,13 +50,13 @@ const useFirebase = () => {
             .finally(() => setIsLoading(false));
     }
 
-    const saveUser = (email, displayName, photoURL, method) => {
+    const saveUser = (email, displayName, photoURL) => {
         const user = { email, displayName, photoURL };
 
         fetch('https://shrouded-eyrie-37217.herokuapp.com/users', {
-            method: method,
+            method: "PUT",
             headers: {
-                'content-type': 'application/json'
+                'Content-type': 'application/json'
             },
             body: JSON.stringify(user)
         })

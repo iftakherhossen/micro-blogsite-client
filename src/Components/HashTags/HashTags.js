@@ -6,7 +6,7 @@ const HashTags = () => {
     return (
         <Box className="userInfoGrid">
             <Box sx={{ px: 1, pt: 1, textAlign: 'left' }}>
-                <Typography variant="subtitle1">Popular Hashtags <span className="coloredTxt">#</span></Typography>
+                <Typography variant="subtitle1" sx={{fontWeight: 600}}>Popular Hashtags <span className="coloredTxt fwBold">#</span></Typography>
             </Box>
             <Box sx={{ p: 1, textAlign: 'left' }}>
                 <Chip

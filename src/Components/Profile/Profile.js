@@ -23,7 +23,7 @@ const Profile = ({ userData }) => {
     }
 
     return (
-        <Grid item xs={12} sm={12} md={3} className="userInfoGridCard">
+        <Grid item xs={12} sm={12} md={3} className="userInfoGridCard" data-aos="fade-right">
             <Box className="userInfoGrid">
                 <Box sx={{ py: 2 }}>
                     <Box className="alignCenter">
@@ -40,7 +40,7 @@ const Profile = ({ userData }) => {
                     <Box className="alignCenter">
                         {userData.email && <Typography variant="body2">Total Post - {userPost.length}</Typography>}
                     </Box>
-                    {userData.displayName === user.displayName && <Tooltip title="Saved Posts">
+                    {userData.displayName === user?.displayName && <Tooltip title="Saved Posts">
                         <IconButton type="button" onClick={handleSavedPosts}>
                             <FolderSpecialIcon sx={{ color: '#0693E3', fontSize: '1.25em' }} />
                         </IconButton>

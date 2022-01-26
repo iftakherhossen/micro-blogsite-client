@@ -23,7 +23,7 @@ const User = ({ folk }) => {
     }, [email]);
 
     return (
-        <ListItem className={"listItem userProfile " + (user.displayName === displayName && "profileBorder")} sx={{ px: 1 }} onClick={() => handleUserProfile(folk)}>
+        <ListItem className={"listItem userProfile " + (user?.displayName === displayName && "profileBorder")} sx={{ px: 1 }} onClick={() => handleUserProfile(folk)}>
             <ListItemAvatar sx={{ my: '1px', p: 0 }}>
                 <Avatar alt={displayName} src={photoURL} />
             </ListItemAvatar>
@@ -32,7 +32,7 @@ const User = ({ folk }) => {
                     {displayName}
                 </Typography>
                 {email && <Typography variant="caption" sx={{ color: 'black' }}>
-                    Total Post - {usersPost.length}
+                    Total Post - {usersPost?.length}
                 </Typography>}
             </ListItemText>
         </ListItem>

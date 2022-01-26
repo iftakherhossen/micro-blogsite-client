@@ -71,12 +71,19 @@
 .txtCard {
   margin: 0.4rem;
   box-shadow: none !important;
-  padding: 4rem 2rem;
+  padding: 5rem 2rem;
   text-align: center;
 }
 
-span {
+.contactBtn {
+  border: 1px solid #0693E3;
+  margin: 0 10px;
+  padding: 0.4rem 1.5rem;
+  font-size: 1em;
   color: #0693E3;
+  border-radius: 15px;
+  font-weight: 600;
+  cursor: pointer;
 }
 /* Global CSS End */
 
@@ -99,6 +106,16 @@ span {
 
 .postBtn {
   margin: 0 10px !important;
+  background-color: #0693E3 !important;
+  padding: 8px 16px;
+  border: 0;
+  border-radius: 25px;
+  color: white;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.editBtn {
+  margin-top: 10px !important;
   background-color: #0693E3 !important;
   padding: 8px 16px;
   border: 0;
@@ -145,6 +162,7 @@ span {
 .listItem {
   cursor: pointer !important;
 }
+
 .userProfile:hover {
   box-shadow: 0 2px 8px #ddd;
 }
