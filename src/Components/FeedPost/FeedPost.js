@@ -203,7 +203,7 @@ const FeedPost = ({ singlePost, handleDelete }) => {
                 }
             />
             <CardContent>
-                <Typography variant="body1" sx={{ wordWrap: 'break-word' }}>
+                <Typography variant="body1" sx={{ wordWrap: 'break-word', whiteSpace: 'pre-line' }}>
                     <Linkify>
                         {content}
                     </Linkify>
@@ -235,7 +235,9 @@ const FeedPost = ({ singlePost, handleDelete }) => {
                                 <Typography variant="body1" sx={{ mb: '-4px' }} className="fwBold" onClick={() => handleViewProfile()}>{username}</Typography>
                             }
                             subheader={
-                                <Typography variant="caption" sx={{ color: '#aaa', mt: 0, pt: 0 }}>{date}</Typography>
+                                <Typography variant="caption" sx={{ color: '#aaa', mt: 0, pt: 0 }}>
+                                    {date}
+                                </Typography>
                             }
                         />
                         <CardContent>

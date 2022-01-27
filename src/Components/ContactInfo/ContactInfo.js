@@ -1,4 +1,4 @@
-import { Alert, Button, IconButton, Modal, Snackbar, TextField, Typography } from '@mui/material';
+import { Alert, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, Modal, Snackbar, TextField, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import React, { useRef, useState } from 'react';
 import emailjs from 'emailjs-com';
@@ -14,18 +14,6 @@ const style = {
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: 400,
-    bgcolor: 'white',
-    boxShadow: 24,
-    p: 4,
-    textAlign: 'center'
-};
-
-const styleSubs = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 500,
     bgcolor: 'white',
     boxShadow: 24,
     p: 4,
@@ -178,32 +166,29 @@ const ContactInfo = () => {
             </Snackbar>}
 
             {/* Subscribe Modal */}
-            <Modal
-                open={openSubscribe}
-                onClose={handleSubscribeClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
-                <Box sx={styleSubs}>
-                    <Typography id="modal-modal-title" variant="h5" component="h2" sx={{ textAlign: 'center', mb: 2 }}>
-                        Subscribe to get News & Updates!
-                    </Typography>
-                    <Box sx={{ px: 2 }}>
-                        <form onSubmit={handleSubmit(subscribe)}>
-                            <TextField
-                                id="standard-basic"
-                                label="Email"
-                                name="email"
-                                variant="standard"
-                                required
-                                sx={{ width: 1, mb: 3 }}
-                                {...register("email", { required: true })}
-                            />
-                            <Button type="submit" variant="contained" sx={{ py: '5px', px: 2 }}>Subscribe</Button>
-                        </form>
-                    </Box>
-                </Box>
-            </Modal>
+            <Dialog open={openSubscribe} onClose={handleSubscribeClose}>
+                <DialogTitle>Subscribe</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        To subscribe to this website, please enter your email address here. We
+                        will send updates occasionally.
+                    </DialogContentText>
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        id="name"
+                        label="Email Address"
+                        type="email"
+                        fullWidth
+                        variant="standard"
+                        {...register("email", { required: true })}
+                    />
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleSubscribeClose}>Cancel</Button>
+                    <Button onClick={handleSubmit(subscribe)}>Subscribe</Button>
+                </DialogActions>
+            </Dialog>
 
             {successSubscribe && <Snackbar open={openSubsSnackbar} autoHideDuration={1000} action={action}>
                 <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>

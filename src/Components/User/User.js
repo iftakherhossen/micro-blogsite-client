@@ -28,7 +28,7 @@ const User = ({ folk }) => {
                 <Avatar alt={displayName} src={photoURL} />
             </ListItemAvatar>
             <ListItemText sx={{ my: '1px', p: 0 }}>
-                <Typography sx={{ fontSize: '0.9em', fontWeight: 600, mb: '-4px', color: 'black' }}>
+                <Typography sx={{ fontSize: '0.9em', fontWeight: 600, mb: '-4px', color: 'black' }} className={(user?.displayName === displayName && "coloredTxt")}>
                     {displayName}
                 </Typography>
                 {email && <Typography variant="caption" sx={{ color: 'black' }}>
