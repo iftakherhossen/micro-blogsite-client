@@ -1,7 +1,7 @@
 /* Global CSS Start */
 .gridCard {
-  margin: 0.30rem 0 !important;
-  padding: 5px 7px;
+  margin: 0 !important;
+  padding: 6px 7px;
   height: 100%;
 }
 
@@ -69,9 +69,9 @@
 }
 
 .txtCard {
-  margin: 0.4rem;
+  margin: 0.4rem 0;
   box-shadow: none !important;
-  padding: 5rem 2rem;
+  padding: 5.5rem 2rem;
   text-align: center;
 }
 
@@ -85,6 +85,7 @@
   font-weight: 600;
   cursor: pointer;
 }
+
 /* Global CSS End */
 
 
@@ -114,6 +115,7 @@
   text-transform: uppercase;
   cursor: pointer;
 }
+
 .editBtn {
   margin-top: 10px !important;
   background-color: #0693E3 !important;
@@ -133,11 +135,11 @@
   display: flex !important;
   flex-direction: column !important;
   text-align: center;
-  padding: 0.1rem 0;
+  padding: 0rem 0;
 }
 
 .userInfoGrid {
-  margin: 1rem 0.5rem 0 !important;
+  margin: 0.9rem 0.5rem 0 !important;
   background-color: white;
   padding: 10px;
 }
@@ -161,6 +163,24 @@
 
 .listItem {
   cursor: pointer !important;
+  position: relative;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 16%;
+  height: 70%;
+  opacity: 0;
+  transition: .3s ease;
+  border-radius: 25px;
+  margin-top: 9px;
+}
+
+.listItem:hover .overlay {
+  opacity: 1;
 }
 
 .userProfile:hover {
@@ -306,6 +326,18 @@
 }
 
 /* Mobile Design End */
+
+/* Small Tab Design Start */
+@media only screen and (min-width: 601px) and (max-width: 745px) {
+  .listWrapper {
+    display: grid;
+    grid-template-columns: auto auto !important;
+    grid-gap: 10px;
+  }
+}
+
+/* Small Tab Design End */
+
 
 /* Tab Design Start */
 @media only screen and (min-width: 601px) and (max-width: 900px) {

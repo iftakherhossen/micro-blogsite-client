@@ -7,7 +7,7 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn';
 const Footer = () => {
     return (
         <Container>
-            <Grid container className="footerSection" data-aos="fade-down">
+            <Grid container className="footerSection">
                 <Grid item xs={12} sm={2} md={1} className="smIconHolder">
                     <InstagramIcon className="smIcon" />
                     <TwitterIcon className="smIcon" />

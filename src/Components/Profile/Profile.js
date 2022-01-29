@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import FolderSpecialIcon from '@mui/icons-material/FolderSpecial';
 import useAuth from '../../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
+import BorderColorIcon from '@mui/icons-material/BorderColor';
 
 const Profile = ({ userData }) => {
     const [userPost, setUserPost] = useState([]);
@@ -21,6 +22,9 @@ const Profile = ({ userData }) => {
         const updateLink = link.replace(/ /g, '');
         navigate(updateLink)
     }
+    const handleNewPost = () => {
+        navigate('/')
+    }
 
     return (
         <Grid item xs={12} sm={12} md={3} className="userInfoGridCard" data-aos="fade-right">
@@ -35,16 +39,25 @@ const Profile = ({ userData }) => {
                         />
                     </Box>
                     <Box className="userName">
-                        <Typography variant="h5">{userData.displayName}</Typography>
+                        <Typography variant="h5">{userData?.displayName}</Typography>
                     </Box>
                     <Box className="alignCenter">
-                        {userData.email && <Typography variant="body2">Total Post - {userPost.length}</Typography>}
+                        {userData?.email && <Typography variant="body2">
+                            Total Post - {userPost.length}
+                        </Typography>}
                     </Box>
-                    {userData.displayName === user?.displayName && <Tooltip title="Saved Posts">
-                        <IconButton type="button" onClick={handleSavedPosts}>
-                            <FolderSpecialIcon sx={{ color: '#0693E3', fontSize: '1.25em' }} />
-                        </IconButton>
-                    </Tooltip>}
+                    <Box sx={{mt: 1}}>
+                        {userData?.email === user?.email && <Tooltip title="Saved Posts">
+                            <IconButton type="button" onClick={handleSavedPosts}>
+                                <FolderSpecialIcon sx={{ color: '#0693E3', fontSize: '1.25em' }} />
+                            </IconButton>
+                        </Tooltip>}
+                        {userData?.email === user?.email && <Tooltip title="New Post">
+                            <IconButton type="button" onClick={handleNewPost}>
+                                <BorderColorIcon sx={{ color: '#0693E3', fontSize: '1em' }} />
+                            </IconButton>
+                        </Tooltip>}
+                    </Box>
                 </Box>
             </Box>
         </Grid>

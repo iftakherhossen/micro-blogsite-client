@@ -9,6 +9,7 @@ const useFirebase = () => {
     const [user, setUser] = useState({});
     const [isLoading, setIsLoading] = useState(true);
     const [authError, setAuthError] = useState('');
+    const [admin, setAdmin] = useState(true);
 
     const auth = getAuth();
     const googleProvider = new GoogleAuthProvider();
@@ -26,7 +27,7 @@ const useFirebase = () => {
                 setAuthError(error.message);
             })
             .finally(() => setIsLoading(false));
-    };
+    }; 
 
     //observe user state
     useEffect(() => {
@@ -50,11 +51,17 @@ const useFirebase = () => {
             .finally(() => setIsLoading(false));
     }
 
+    useEffect(() => {
+        fetch(`https://shrouded-eyrie-37217.herokuapp.com/users/${user.email}`)
+            .then(res => res.json())
+            .then(data => setAdmin(data.admin));
+    }, [user.email])
+
     const saveUser = (email, displayName, photoURL) => {
         const user = { email, displayName, photoURL };
 
         fetch('https://shrouded-eyrie-37217.herokuapp.com/users', {
-            method: "PUT",
+            method: 'PUT',
             headers: {
                 'Content-type': 'application/json'
             },
@@ -68,6 +75,7 @@ const useFirebase = () => {
         signInWithGoogle,
         logOut,
         user,
+        admin,
         isLoading,
         authError
     }

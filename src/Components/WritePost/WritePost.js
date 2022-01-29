@@ -1,7 +1,7 @@
 import { Alert, Avatar, Grid, IconButton, Snackbar, TextField, Tooltip, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { useForm } from 'react-hook-form';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import HashTags from '../HashTags/HashTags';
 import useAuth from '../../hooks/useAuth';
 import ErrorIcon from '@mui/icons-material/Error';
@@ -15,7 +15,18 @@ const WritePost = () => {
     const [openSnackbar, setOpenSnackbar] = useState(false);
     const today = new Date();
     const weekday = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-    const date = today.getHours() + ':' + today.getMinutes() + ' ' + weekday[today.getDay()] + ', ' + today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear();
+    const time = today.getHours() + ':' + today.getMinutes();
+    const date = ' ' + weekday[today.getDay()] + ', ' + today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear();
+    const reactions = 0;
+    const [location, setLocation] = useState('');
+
+    useEffect(() => {
+        fetch('http://ip-api.com/json')
+            .then(res => res.json())
+            .then(data => setLocation(data))
+    }, []);
+
+    const userLocation = location?.city + ' ' + location?.country;
 
     const onSubmit = data => {
         const content = data.content;
@@ -25,7 +36,10 @@ const WritePost = () => {
             email: user.email,
             img: user.photoURL,
             content,
-            date
+            date,
+            time, 
+            userLocation,
+            reactions
         }
 
         fetch('https://shrouded-eyrie-37217.herokuapp.com/posts', {

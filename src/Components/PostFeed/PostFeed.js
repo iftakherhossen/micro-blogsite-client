@@ -5,7 +5,7 @@ import CloseIcon from '@mui/icons-material/Close';
 
 const PostFeed = () => {
     const [post, setPost] = useState([]);
-    const [success, setSuccess] = useState(false)
+    const [success, setSuccess] = useState(false);
     const [openSnackbar, setOpenSnackbar] = useState(false);
 
     useEffect(() => {

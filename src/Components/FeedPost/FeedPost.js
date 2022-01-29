@@ -1,7 +1,8 @@
-import { Alert, Avatar, Card, CardActions, CardContent, CardHeader, ClickAwayListener, IconButton, Modal, Snackbar, TextField, Tooltip, Typography } from '@mui/material';
+import { Alert, Avatar, Card, CardActions, CardContent, CardHeader, Checkbox, ClickAwayListener, IconButton, Modal, Snackbar, TextField, Tooltip, Typography } from '@mui/material';
 import React, { useState } from 'react';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import FavoriteIcon from '@mui/icons-material/Favorite';
+import Favorite from '@mui/icons-material/Favorite';
+import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import ShareIcon from '@mui/icons-material/Share';
 import { Box } from '@mui/system';
 import { EmailShareButton, FacebookShareButton, TelegramShareButton, TwitterShareButton, WhatsappShareButton } from "react-share";
@@ -52,8 +53,8 @@ const moreBtnPortalStyle = {
 };
 
 const FeedPost = ({ singlePost, handleDelete }) => {
-    const { _id, username, email, date, img, content } = singlePost;
-    const { user } = useAuth();
+    const { _id, username, email, date, img, content, time, userLocation } = singlePost;
+    const { user, admin } = useAuth();
     const [shareModalOpen, setShareModalOpen] = useState(false);
     const [editedContent, setEditedContent] = useState('');
     const [editSuccess, setEditSuccess] = useState(false);
@@ -66,7 +67,6 @@ const FeedPost = ({ singlePost, handleDelete }) => {
     const handleEditModalClose = () => setEditModalOpen(false);
     const handleClick = () => setMoreOpen((prev) => !prev);
     const handleClickAway = () => setMoreOpen(false);
-    const [color, setColor] = useState('#aaa');
     const mainLink = "https://bloom-micro-blogsite.web.app";
     const hashtags = ["bloom", "microblogsite", "postoftheday"];
     const related = ["@iftakher_hossen", "@microbblogsite, @healyourselfbd"];
@@ -74,13 +74,7 @@ const FeedPost = ({ singlePost, handleDelete }) => {
     const viewLink = `/${username}/posts/${_id}`;
     const viewPostLink = viewLink.replace(/ /g, '');
     const [savedPost, setSavedPost] = useState([]);
-
-    const handleReaction = e => {
-        setColor('red')
-    }
-    const handleRemoveReaction = e => {
-        setColor('#aaa')
-    }
+    const localDate = time + ', ' + date + ', ' + userLocation;
 
     const handleCopyBtn = (content) => {
         navigator.clipboard.writeText(content);
@@ -155,7 +149,7 @@ const FeedPost = ({ singlePost, handleDelete }) => {
                             {moreOpen ? (
                                 <Box sx={moreBtnPortalStyle}>
                                     {
-                                        user?.email === email ? <Tooltip title="Delete Post">
+                                        user?.email === email || admin ? <Tooltip title="Delete Post">
                                             <IconButton aria-label="delete-post" onClick={() => handleDelete(_id)}>
                                                 <DeleteIcon className="redHover" />
                                             </IconButton>
@@ -199,7 +193,7 @@ const FeedPost = ({ singlePost, handleDelete }) => {
                     <Typography variant="body1" sx={{ mb: '-4px' }} className="fwBold" onClick={() => handleViewProfile()}>{username}</Typography>
                 }
                 subheader={
-                    <Typography variant="caption" sx={{ color: '#aaa', mt: 0, pt: 0 }}>{date}</Typography>
+                    <Typography variant="caption" sx={{ color: '#aaa', mt: 0, pt: 0 }}>{localDate}</Typography>
                 }
             />
             <CardContent>
@@ -210,9 +204,7 @@ const FeedPost = ({ singlePost, handleDelete }) => {
                 </Typography>
             </CardContent>
             <CardActions sx={{ justifyContent: 'flex-end' }}>
-                <IconButton onClick={handleReaction} onDoubleClick={handleRemoveReaction}>
-                    <FavoriteIcon sx={{ color: color }} />
-                </IconButton>
+                <Checkbox aria-label="reaction" icon={<FavoriteBorder />} checkedIcon={<Favorite sx={{ color: '#E56178'}} />} />
                 <IconButton aria-label="share" onClick={handleShareModalOpen}>
                     <ShareIcon className="iconHover" />
                 </IconButton>

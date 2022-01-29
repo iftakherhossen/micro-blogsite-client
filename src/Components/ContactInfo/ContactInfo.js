@@ -69,14 +69,13 @@ const ContactInfo = () => {
             });
         e.target.reset();
 
-        setSuccess(true);
         handleContactClose();
+        setSuccess(true);
         openSnackbar(true);
     };
 
     const subscribe = data => {
         const email = data.email;
-
         fetch('https://shrouded-eyrie-37217.herokuapp.com/subscription', {
             method: 'POST',
             headers: {
@@ -89,7 +88,8 @@ const ContactInfo = () => {
                 if (result.insertedId) {
                     setSuccessSubscribe(true);
                     setOpenSubsSnackbar(true);
-                    reset();
+                    handleSubscribeClose();
+                    reset();                   
                 }
             })
     }
@@ -159,7 +159,7 @@ const ContactInfo = () => {
                 </Box>
             </Modal>
 
-            {success && <Snackbar open={openSnackbar} autoHideDuration={2000} action={action}>
+            {success && <Snackbar open={openSnackbar} autoHideDuration={1000} action={action}>
                 <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
                     Message send successfully!
                 </Alert>
