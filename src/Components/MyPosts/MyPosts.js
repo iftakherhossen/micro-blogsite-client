@@ -59,7 +59,7 @@ const MyPosts = ({ userData }) => {
 
     return (
         <>
-            <Grid item xs={12} sm={12} md={6} className="gridCard" sx={{ pt: '7.3px' }} data-aos="fade-down" data-aos-anchor-placement="center-center">
+            <Grid item xs={12} sm={12} md={6} className="gridCard" sx={{ pt: '7.3px' }}>
                 {
                     userData.email && post.length === 0 && <Card className="txtCard">
                         <Typography variant="h6"><span className="coloredTxt">{userData?.displayName}</span> haven't posted anything yet!</Typography>

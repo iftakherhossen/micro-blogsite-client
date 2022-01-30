@@ -19,14 +19,17 @@ const WritePost = () => {
     const date = ' ' + weekday[today.getDay()] + ', ' + today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear();
     const reactions = 0;
     const [location, setLocation] = useState('');
+    const tokenAPI = process.env.REACT_APP_TOKEN_API;
+    //${tokenAPI}
 
     useEffect(() => {
-        fetch('http://ip-api.com/json')
+        fetch("https://ipinfo.io/json?token=e90730ea0305e5")
             .then(res => res.json())
             .then(data => setLocation(data))
-    }, []);
+    }, [tokenAPI]);
 
-    const userLocation = location?.city + ' ' + location?.country;
+    const uLocation = location?.country === 'BD' && 'Bangladesh';
+    const userLocation = location?.city + ', ' + uLocation;
 
     const onSubmit = data => {
         const content = data.content;

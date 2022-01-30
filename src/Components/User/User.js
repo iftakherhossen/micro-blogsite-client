@@ -4,10 +4,11 @@ import { useNavigate } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 import CloseIcon from '@mui/icons-material/Close';
 import DeleteIcon from '@mui/icons-material/Delete';
+import VerifiedIcon from '@mui/icons-material/Verified';
 import { Box } from '@mui/system';
 
 const User = ({ folk }) => {
-    const { _id, displayName, photoURL, email } = folk;
+    const { _id, displayName, photoURL, email, role } = folk;
     const link = `/users/${displayName}`;
     const updatedLink = link.replace(/ /g, '');
     const navigate = useNavigate();
@@ -77,8 +78,8 @@ const User = ({ folk }) => {
                     <Avatar alt={displayName} src={photoURL} />
                 </ListItemAvatar>
                 <ListItemText sx={{ my: '1px', p: 0 }}>
-                    <Typography sx={{ fontSize: '0.9em', fontWeight: 600, mb: '-4px', color: 'black' }} className={(user?.email === email && "coloredTxt")}>
-                        {displayName}
+                    <Typography sx={{ fontSize: '0.9em', fontWeight: 600, mb: '-4px', color: 'black', display: 'flex', alignItems: 'center' }} className={(user?.email === email && "coloredTxt")}>
+                        {displayName} &nbsp; {role === 'creator' && <Tooltip title="Verified Creator"><VerifiedIcon sx={{fontSize: 15}} /></Tooltip>}
                     </Typography>
                     {email && <Typography variant="caption" sx={{ color: 'black' }}>
                         Total Post - {usersPost?.length}

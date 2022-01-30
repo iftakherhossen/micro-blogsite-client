@@ -139,7 +139,7 @@
 }
 
 .userInfoGrid {
-  margin: 0.9rem 0.5rem 0 !important;
+  margin: 0.90rem 0.5rem 0 !important;
   background-color: white;
   padding: 10px;
 }
@@ -328,11 +328,21 @@
 /* Mobile Design End */
 
 /* Small Tab Design Start */
-@media only screen and (min-width: 601px) and (max-width: 745px) {
+@media only screen and (min-width: 601px) and (max-width: 772px) {
+
   .listWrapper {
     display: grid;
     grid-template-columns: auto auto !important;
     grid-gap: 10px;
+  }
+}
+
+@media only screen and (min-width: 601px) and (max-width: 745px) {
+
+  .developer {
+    display: block;
+    margin: 10px 0 10px auto !important;
+    width: 27.5%;
   }
 }
 

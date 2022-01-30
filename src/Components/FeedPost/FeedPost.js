@@ -17,6 +17,7 @@ import { useNavigate } from 'react-router-dom';
 import Linkify from 'react-linkify';
 import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from '@mui/icons-material/Close';
+import VerifiedIcon from '@mui/icons-material/Verified';
 
 const modalStyle = {
     position: 'absolute',
@@ -54,7 +55,7 @@ const moreBtnPortalStyle = {
 
 const FeedPost = ({ singlePost, handleDelete }) => {
     const { _id, username, email, date, img, content, time, userLocation } = singlePost;
-    const { user, admin } = useAuth();
+    const { user, admin, creator } = useAuth();
     const [shareModalOpen, setShareModalOpen] = useState(false);
     const [editedContent, setEditedContent] = useState('');
     const [editSuccess, setEditSuccess] = useState(false);
@@ -190,7 +191,9 @@ const FeedPost = ({ singlePost, handleDelete }) => {
                     </ClickAwayListener>
                 }
                 title={
-                    <Typography variant="body1" sx={{ mb: '-4px' }} className="fwBold" onClick={() => handleViewProfile()}>{username}</Typography>
+                    <Typography variant="body1" sx={{ mb: '-4px', fontWeight: 'bold' }} onClick={() => handleViewProfile()}>
+                        {username} {creator && <Tooltip title="Verified Creator"><VerifiedIcon sx={{ fontSize: 14, color: '#0693E3' }} /></Tooltip>}
+                    </Typography>
                 }
                 subheader={
                     <Typography variant="caption" sx={{ color: '#aaa', mt: 0, pt: 0 }}>{localDate}</Typography>
