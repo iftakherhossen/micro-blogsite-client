@@ -79,7 +79,7 @@ const User = ({ folk }) => {
                 </ListItemAvatar>
                 <ListItemText sx={{ my: '1px', p: 0 }}>
                     <Typography sx={{ fontSize: '0.9em', fontWeight: 600, mb: '-4px', color: 'black', display: 'flex', alignItems: 'center' }} className={(user?.email === email && "coloredTxt")}>
-                        {displayName} &nbsp; {role === 'creator' && <Tooltip title="Verified Creator"><VerifiedIcon sx={{fontSize: 15}} /></Tooltip>}
+                        {displayName} &nbsp; {(role === 'creator' || role === 'admin') && <Tooltip title="Verified Creator"><VerifiedIcon sx={{ fontSize: 14, color: '#0693E3' }} /></Tooltip>}
                     </Typography>
                     {email && <Typography variant="caption" sx={{ color: 'black' }}>
                         Total Post - {usersPost?.length}

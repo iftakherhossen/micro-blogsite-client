@@ -20,10 +20,9 @@ const WritePost = () => {
     const reactions = 0;
     const [location, setLocation] = useState('');
     const tokenAPI = process.env.REACT_APP_TOKEN_API;
-    //${tokenAPI}
 
     useEffect(() => {
-        fetch("https://ipinfo.io/json?token=e90730ea0305e5")
+        fetch(`https://ipinfo.io/json?token=${tokenAPI}`)
             .then(res => res.json())
             .then(data => setLocation(data))
     }, [tokenAPI]);
@@ -88,7 +87,7 @@ const WritePost = () => {
             <Box className="userInfoGrid">
                 <Box className="wrapper">
                     <Box className="alignCenter">
-                        <Avatar alt={user.displayName} src={user.photoURL} className="avatar" />
+                        <Avatar alt={user?.displayName} src={user?.photoURL} className="avatar" />
                     </Box>
                     <Box className="userName">
                         <Typography variant="h6">{user?.displayName}</Typography>

@@ -1,5 +1,5 @@
 import { Alert, Avatar, Card, CardActions, CardContent, CardHeader, Checkbox, ClickAwayListener, IconButton, Modal, Snackbar, TextField, Tooltip, Typography } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Favorite from '@mui/icons-material/Favorite';
 import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
@@ -53,9 +53,21 @@ const moreBtnPortalStyle = {
     justifyContent: 'flex-start'
 };
 
+const imgModalStyle = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 200,
+    height: 200,
+    boxShadow: 24,
+    border: 'none',
+    outline: 'none'
+};
+
 const FeedPost = ({ singlePost, handleDelete }) => {
     const { _id, username, email, date, img, content, time, userLocation } = singlePost;
-    const { user, admin, creator } = useAuth();
+    const { user, admin } = useAuth();
     const [shareModalOpen, setShareModalOpen] = useState(false);
     const [editedContent, setEditedContent] = useState('');
     const [editSuccess, setEditSuccess] = useState(false);
@@ -76,6 +88,16 @@ const FeedPost = ({ singlePost, handleDelete }) => {
     const viewPostLink = viewLink.replace(/ /g, '');
     const [savedPost, setSavedPost] = useState([]);
     const localDate = time + ', ' + date + ', ' + userLocation;
+    const [creator, setCreator] = useState(false);
+    const [openImgModal, setOpenImgModal] = useState(false);
+    const handleOpenImgModal = () => setOpenImgModal(true);
+    const handleCloseImgModal = () => setOpenImgModal(false);
+
+    useEffect(() => {
+        fetch(`https://shrouded-eyrie-37217.herokuapp.com/users/${email}/creator`)
+            .then(res => res.json())
+            .then(data => setCreator(data.creator))
+    }, [email])
 
     const handleCopyBtn = (content) => {
         navigator.clipboard.writeText(content);
@@ -135,11 +157,15 @@ const FeedPost = ({ singlePost, handleDelete }) => {
         </>
     );
 
+    const handleImgModal = () => {
+        handleOpenImgModal();
+    }
+
     return (
         <Card sx={{ width: 1, mt: 1, mb: 2 }}>
             <CardHeader
                 avatar={
-                    <Avatar alt={username} src={img} sx={{ bgcolor: "#0693E3" }} />
+                    <Avatar alt={username} src={img} sx={{ bgcolor: "#0693E3" }} onClick={handleImgModal} />
                 }
                 action={
                     <ClickAwayListener onClickAway={handleClickAway}>
@@ -207,12 +233,26 @@ const FeedPost = ({ singlePost, handleDelete }) => {
                 </Typography>
             </CardContent>
             <CardActions sx={{ justifyContent: 'flex-end' }}>
-                <Checkbox aria-label="reaction" icon={<FavoriteBorder />} checkedIcon={<Favorite sx={{ color: '#E56178'}} />} />
+                <Checkbox aria-label="reaction" icon={<FavoriteBorder />} checkedIcon={<Favorite sx={{ color: '#E56178' }} />} />
                 <IconButton aria-label="share" onClick={handleShareModalOpen}>
                     <ShareIcon className="iconHover" />
                 </IconButton>
             </CardActions>
 
+
+            {/* ImgModal Start */}
+            <Modal
+                open={openImgModal}
+                onClose={handleCloseImgModal}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box sx={imgModalStyle}>
+                    <Typography variant="h6" sx={{ position: 'absolute', width: 1, textAlign: 'center', bgcolor: 'white', bottom: 0 }}>{username} {creator && <Tooltip title="Verified Creator"><VerifiedIcon sx={{ fontSize: 14, color: '#0693E3' }} /></Tooltip>}</Typography>
+                    <img src={img} alt={username} style={{width: '100%'}} />
+                </Box>
+            </Modal>
+            {/* ImgModal End */}
 
             {/* Edit Modal Start */}
             <Modal
@@ -222,36 +262,36 @@ const FeedPost = ({ singlePost, handleDelete }) => {
                 aria-describedby="modal-modal-description"
             >
                 <Card sx={editModalStyle}>
-                        <CardHeader
-                            avatar={
-                                <Avatar alt={username} src={img} sx={{ bgcolor: "#0693E3" }} />
-                            }
-                            title={
-                                <Typography variant="body1" sx={{ mb: '-4px' }} className="fwBold" onClick={() => handleViewProfile()}>{username}</Typography>
-                            }
-                            subheader={
-                                <Typography variant="caption" sx={{ color: '#aaa', mt: 0, pt: 0 }}>
-                                    {date}
-                                </Typography>
-                            }
-                        />
-                        <CardContent>
-                            <form onSubmit={handleEditPost}>
-                                <TextField
-                                    id="standard-multiline-static"
-                                    multiline
-                                    rows={4}
-                                    defaultValue={content}
-                                    sx={{ width: '100%', userSelect: 'text' }}
-                                    placeholder="Write what's on your mind!"
-                                    // {...register("content", { required: true })}
-                                    inputProps={{ maxLength: 200 }}
-                                    onChange={e => setEditedContent(e.target.value)}
-                                />
-                                <Box sx={{ textAlign: 'right' }}><button type="submit" className="editBtn" disabled={!editedContent}>Post</button></Box>
-                            </form>
-                        </CardContent>
-                    </Card>
+                    <CardHeader
+                        avatar={
+                            <Avatar alt={username} src={img} sx={{ bgcolor: "#0693E3" }} />
+                        }
+                        title={
+                            <Typography variant="body1" sx={{ mb: '-4px' }} className="fwBold" onClick={() => handleViewProfile()}>{username}</Typography>
+                        }
+                        subheader={
+                            <Typography variant="caption" sx={{ color: '#aaa', mt: 0, pt: 0 }}>
+                                {date}
+                            </Typography>
+                        }
+                    />
+                    <CardContent>
+                        <form onSubmit={handleEditPost}>
+                            <TextField
+                                id="standard-multiline-static"
+                                multiline
+                                rows={4}
+                                defaultValue={content}
+                                sx={{ width: '100%', userSelect: 'text' }}
+                                placeholder="Write what's on your mind!"
+                                // {...register("content", { required: true })}
+                                inputProps={{ maxLength: 200 }}
+                                onChange={e => setEditedContent(e.target.value)}
+                            />
+                            <Box sx={{ textAlign: 'right' }}><button type="submit" className="editBtn" disabled={!editedContent}>Post</button></Box>
+                        </form>
+                    </CardContent>
+                </Card>
             </Modal>
             {/* Edit Modal End */}
 

@@ -40,7 +40,7 @@ const Profile = ({ userData }) => {
                         />
                     </Box>
                     <Box className="userName">
-                        <Typography variant="h5">{userData?.displayName} {userData.role === 'creator' && <Tooltip title="Verified Creator"><VerifiedIcon sx={{ fontSize: 18 }} /></Tooltip>}</Typography>
+                        <Typography variant="h5">{userData?.displayName} {userData.role === 'creator' && <Tooltip title="Verified Creator"><VerifiedIcon sx={{ fontSize: 18, color: '#0693E3' }} /></Tooltip>}</Typography>
                     </Box>
                     <Box className="alignCenter">
                         {userData?.email && <Typography variant="body2">

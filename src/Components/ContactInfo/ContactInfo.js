@@ -35,8 +35,6 @@ const ContactInfo = () => {
     const [successSubscribe, setSuccessSubscribe] = useState(false);
     const [openSnackbar, setOpenSnackbar] = useState(false);
     const [openSubsSnackbar, setOpenSubsSnackbar] = useState(false);
-
-
     const { register, handleSubmit, reset } = useForm();
 
     const handleClose = (event, reason) => {
@@ -74,8 +72,9 @@ const ContactInfo = () => {
         openSnackbar(true);
     };
 
-    const subscribe = data => {
+    const onSubmit = data => {
         const email = data.email;
+
         fetch('https://shrouded-eyrie-37217.herokuapp.com/subscription', {
             method: 'POST',
             headers: {
@@ -89,7 +88,7 @@ const ContactInfo = () => {
                     setSuccessSubscribe(true);
                     setOpenSubsSnackbar(true);
                     handleSubscribeClose();
-                    reset();                   
+                    reset();
                 }
             })
     }
@@ -168,26 +167,28 @@ const ContactInfo = () => {
             {/* Subscribe Modal */}
             <Dialog open={openSubscribe} onClose={handleSubscribeClose}>
                 <DialogTitle>Subscribe</DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                        To subscribe to this website, please enter your email address here. We
-                        will send updates occasionally.
-                    </DialogContentText>
-                    <TextField
-                        autoFocus
-                        margin="dense"
-                        id="name"
-                        label="Email Address"
-                        type="email"
-                        fullWidth
-                        variant="standard"
-                        {...register("email", { required: true })}
-                    />
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleSubscribeClose}>Cancel</Button>
-                    <Button onClick={handleSubmit(subscribe)}>Subscribe</Button>
-                </DialogActions>
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <DialogContent>
+                        <DialogContentText>
+                            To subscribe to this website, please enter your email address here. We
+                            will send updates occasionally.
+                        </DialogContentText>
+                        <TextField
+                            autoFocus
+                            margin="dense"
+                            id="name"
+                            label="Email Address"
+                            type="email"
+                            fullWidth
+                            variant="standard"
+                            {...register("email", { required: true })}
+                        />
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={handleSubscribeClose}>Cancel</Button>
+                        <Button type="submit">Subscribe</Button>
+                    </DialogActions>
+                </form>
             </Dialog>
 
             {successSubscribe && <Snackbar open={openSubsSnackbar} autoHideDuration={1000} action={action}>
