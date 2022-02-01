@@ -58,7 +58,7 @@ const HashTags = () => {
                     sx={{ margin: '4px 3px', border: '1px solid #0693E3' }}
                 />
                 <Chip
-                    label="#sports"
+                    label="#completed"
                     // component="a"
                     // href="/popular-posts/sports"
                     variant="outlined"

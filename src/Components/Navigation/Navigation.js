@@ -1,4 +1,4 @@
-import { Alert, AppBar, Container, IconButton, LinearProgress, Snackbar, Toolbar, Tooltip, Typography } from '@mui/material';
+import { Alert, AppBar, Checkbox, Container, FormControl, IconButton, LinearProgress, Snackbar, Toolbar, Tooltip, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -6,11 +6,14 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import GoogleButton from 'react-google-button';
 import useAuth from '../../hooks/useAuth';
 import CloseIcon from '@mui/icons-material/Close';
+import DarkModeToggle from "react-dark-mode-toggle";
+import useDarkMode from 'use-dark-mode';
 
 const Navigation = () => {
     const { user, signInWithGoogle, logOut, isLoading, authError } = useAuth();
     const [success, setSuccess] = useState(false);
     const [openSnackbar, setOpenSnackbar] = useState(false);
+    const darkMode = useDarkMode(false);
 
     const handleGoogleSignIn = () => {
         signInWithGoogle();
@@ -24,6 +27,7 @@ const Navigation = () => {
         }
         setOpenSnackbar(false);
     };
+
     const action = (
         <>
             <IconButton
@@ -75,6 +79,21 @@ const Navigation = () => {
                                     style={{ boxShadow: 'none', border: 'none', width: '50px', background: 'none' }}
                                 />
                             }
+                            &nbsp; &nbsp;
+                            {/* <DarkModeToggle
+                                onChange={setIsDarkMode}
+                                checked={isDarkMode}
+                                size={50}
+                            /> */}
+                            <div>
+                                <button type="button" onClick={darkMode.disable}>
+                                    ☀
+                                </button>
+                                <Checkbox checked={darkMode.value} onChange={darkMode.toggle} />
+                                <button type="button" onClick={darkMode.enable}>
+                                    ☾
+                                </button>
+                            </div>
                         </Box>
                     </Toolbar>
                 </Container>

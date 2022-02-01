@@ -1,4 +1,4 @@
-import { Avatar, Card, CardActions, CardContent, CardHeader, ClickAwayListener, Grid, IconButton, Modal, Tooltip, Typography } from '@mui/material';
+import { Avatar, Card, CardActions, CardContent, CardHeader, Checkbox, ClickAwayListener, Grid, IconButton, Modal, Tooltip, Typography } from '@mui/material';
 import React, { useState } from 'react';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -11,9 +11,11 @@ import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import DeleteIcon from '@mui/icons-material/Delete';
 import useAuth from '../../hooks/useAuth';
-import ReactHashtag from "react-hashtag";
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { useNavigate } from 'react-router-dom';
+import Linkify from 'react-linkify';
+import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
+import Favorite from '@mui/icons-material/Favorite';
 
 const modalStyle = {
     position: 'absolute',
@@ -48,7 +50,6 @@ const SinglePost = ({ singlePost, handleDelete }) => {
     const handleModalClose = () => setModalOpen(false);
     const handleClick = () => setMoreOpen((prev) => !prev);
     const handleClickAway = () => setMoreOpen(false);
-    const [color, setColor] = useState('#aaa');
     const mainLink = "https://bloom-micro-blogsite.web.app";
     const hashtags = ["bloom", "microblogsite", "postoftheday"];
     const related = ["@iftakher_hossen", "@microbblogsite, @healyourselfbd"];
@@ -56,13 +57,12 @@ const SinglePost = ({ singlePost, handleDelete }) => {
     const link = `/${username}/posts/${_id}`;
     const updatedLink = link.replace(/ /g, '');
 
-
-    const handleReaction = e => {
-        setColor('red')
-    }
-    const handleRemoveReaction = e => {
-        setColor('#aaa')
-    }
+    const hashtagContent = content.split(" ").map((str) => {
+        if (str.startsWith("#")) {
+            return <span className="hashtag">{str} </span>;
+        }
+        return str + " ";
+    })
 
     const handleCopyBtn = (content) => {
         navigator.clipboard.writeText(content);
@@ -129,16 +129,14 @@ const SinglePost = ({ singlePost, handleDelete }) => {
                     }
                 />
                 <CardContent>
-                    <Typography variant="body1">
-                        <ReactHashtag>
-                            {content}
-                        </ReactHashtag>
+                    <Typography variant="body1" sx={{ wordWrap: 'break-word', whiteSpace: 'pre-line' }}>
+                        <Linkify>
+                            {hashtagContent}
+                        </Linkify>
                     </Typography>
                 </CardContent>
                 <CardActions sx={{ justifyContent: 'flex-end' }}>
-                    <IconButton onClick={handleReaction} onDoubleClick={handleRemoveReaction}>
-                        <FavoriteIcon sx={{ color: color }} />
-                    </IconButton>
+                    <Checkbox aria-label="reaction" icon={<FavoriteBorder />} checkedIcon={<Favorite sx={{ color: '#E56178' }} />} />
                     <IconButton aria-label="share" onClick={handleModalOpen}>
                         <ShareIcon className="iconHover" />
                     </IconButton>

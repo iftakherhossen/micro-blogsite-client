@@ -12,3 +12,17 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* Dark Mode Style Start */
+body.light-mode {
+  background-color: #E6ECF0;
+  transition: background-color 0.3s ease;
+}
+
+body.dark-mode {
+  background-color: #1a1919;
+  color: #999;
+  transition: background-color 0.3s ease;
+}
+
+/* Dark Mode Style End */

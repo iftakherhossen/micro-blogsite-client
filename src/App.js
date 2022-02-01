@@ -7,6 +7,7 @@ import SavedPosts from './Pages/SavedPosts/SavedPosts';
 import SinglePosts from './Pages/SinglePosts/SinglePosts';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import NotFound from './Components/NotFound/NotFound';
 
 function App() {
   AOS.init();
@@ -45,6 +46,7 @@ function App() {
           <Route path="/users/:displayName" element={<UserProfile />} />
           <Route path="/:displayName/posts/:id" element={<SinglePosts />} />
           <Route path="/users/:displayName/savedPosts" element={<SavedPosts />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
     </AuthProvider>

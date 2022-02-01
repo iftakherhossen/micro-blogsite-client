@@ -8,8 +8,8 @@ import VerifiedIcon from '@mui/icons-material/Verified';
 import { Box } from '@mui/system';
 
 const User = ({ folk }) => {
-    const { _id, displayName, photoURL, email, role } = folk;
-    const link = `/users/${displayName}`;
+    const { _id, displayName, photoURL,email, role } = folk;
+    const link = `/users/${folk.displayName}`;
     const updatedLink = link.replace(/ /g, '');
     const navigate = useNavigate();
     const { user, admin } = useAuth();
@@ -72,14 +72,14 @@ const User = ({ folk }) => {
     }
 
     return (
-        <Box className={"listItem userProfile " + (user?.email === email && "profileBorder")} sx={{ px: 1, display: 'flex', overflow: 'none' }}>
+        <Box className={"listItem userProfile " + (user?.email === email && "profileBorder")} sx={{  display: 'flex', overflow: 'none' }}>
             <ListItem onClick={() => handleUserProfile(folk)}>
                 <ListItemAvatar sx={{ my: '1px', p: 0 }}>
                     <Avatar alt={displayName} src={photoURL} />
                 </ListItemAvatar>
                 <ListItemText sx={{ my: '1px', p: 0 }}>
                     <Typography sx={{ fontSize: '0.9em', fontWeight: 600, mb: '-4px', color: 'black', display: 'flex', alignItems: 'center' }} className={(user?.email === email && "coloredTxt")}>
-                        {displayName} &nbsp; {(role === 'creator' || role === 'admin') && <Tooltip title="Verified Creator"><VerifiedIcon sx={{ fontSize: 14, color: '#0693E3' }} /></Tooltip>}
+                        {displayName} &nbsp; {(role === 'creator' || role === 'admin') && <Tooltip title={(role === 'creator' && "Verified Creator" ) || (role === 'admin' && "Admin")}><VerifiedIcon sx={{ fontSize: 14, color: '#0693E3' }} /></Tooltip>}
                     </Typography>
                     {email && <Typography variant="caption" sx={{ color: 'black' }}>
                         Total Post - {usersPost?.length}
@@ -88,7 +88,7 @@ const User = ({ folk }) => {
             </ListItem>
             <div className="overlay">
                 {
-                    admin && <Tooltip title="Delete User">
+                    admin &&  <Tooltip title="Delete User">
                         <IconButton aria-label="delete-post" onClick={() => handleDelete(_id)}>
                             <DeleteIcon className="redHover" />
                         </IconButton>

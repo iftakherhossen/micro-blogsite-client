@@ -19,6 +19,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from '@mui/icons-material/Close';
 import VerifiedIcon from '@mui/icons-material/Verified';
 
+
 const modalStyle = {
     position: 'absolute',
     top: '50%',
@@ -30,6 +31,7 @@ const modalStyle = {
     p: 3,
     textAlign: 'center'
 };
+
 const editModalStyle = {
     position: 'absolute',
     top: '50%',
@@ -92,6 +94,14 @@ const FeedPost = ({ singlePost, handleDelete }) => {
     const [openImgModal, setOpenImgModal] = useState(false);
     const handleOpenImgModal = () => setOpenImgModal(true);
     const handleCloseImgModal = () => setOpenImgModal(false);
+    const cUsername = username.replace(/ /g, '');
+
+    const hashtagContent = content.split(" ").map((str) => {
+        if (str.startsWith("#")) {
+            return <span className="hashtag">{str} </span>;
+        }
+        return str + " ";
+    })
 
     useEffect(() => {
         fetch(`https://shrouded-eyrie-37217.herokuapp.com/users/${email}/creator`)
@@ -121,7 +131,7 @@ const FeedPost = ({ singlePost, handleDelete }) => {
 
     const handleEditPost = () => {
         handleEditModalOpen();
-        fetch(`https://shrouded-eyrie-37217.herokuapp.com/posts/${_id}`, {
+        fetch(`https://shrouded-eyrie-37217.herokuapp.com/${cUsername}/post/${_id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -162,7 +172,7 @@ const FeedPost = ({ singlePost, handleDelete }) => {
     }
 
     return (
-        <Card sx={{ width: 1, mt: 1, mb: 2 }}>
+        <Card sx={{ width: 1, mt: 1, mb: 1.3 }}>
             <CardHeader
                 avatar={
                     <Avatar alt={username} src={img} sx={{ bgcolor: "#0693E3" }} onClick={handleImgModal} />
@@ -228,7 +238,7 @@ const FeedPost = ({ singlePost, handleDelete }) => {
             <CardContent>
                 <Typography variant="body1" sx={{ wordWrap: 'break-word', whiteSpace: 'pre-line' }}>
                     <Linkify>
-                        {content}
+                        {hashtagContent}
                     </Linkify>
                 </Typography>
             </CardContent>
@@ -249,7 +259,7 @@ const FeedPost = ({ singlePost, handleDelete }) => {
             >
                 <Box sx={imgModalStyle}>
                     <Typography variant="h6" sx={{ position: 'absolute', width: 1, textAlign: 'center', bgcolor: 'white', bottom: 0 }}>{username} {creator && <Tooltip title="Verified Creator"><VerifiedIcon sx={{ fontSize: 14, color: '#0693E3' }} /></Tooltip>}</Typography>
-                    <img src={img} alt={username} style={{width: '100%'}} />
+                    <img src={img} alt={username} style={{ width: '100%' }} />
                 </Box>
             </Modal>
             {/* ImgModal End */}
@@ -288,7 +298,7 @@ const FeedPost = ({ singlePost, handleDelete }) => {
                                 inputProps={{ maxLength: 200 }}
                                 onChange={e => setEditedContent(e.target.value)}
                             />
-                            <Box sx={{ textAlign: 'right' }}><button type="submit" className="editBtn" disabled={!editedContent}>Post</button></Box>
+                            <Box sx={{ textAlign: 'right' }}><button type="submit" className="editBtn" disabled={!editedContent}>Update Post</button></Box>
                         </form>
                     </CardContent>
                 </Card>

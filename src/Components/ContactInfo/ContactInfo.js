@@ -95,7 +95,7 @@ const ContactInfo = () => {
 
     return (
         <Box className="userInfoGrid">
-            <Box sx={{ p: 1, textAlign: 'center' }}>
+            <Box sx={{ textAlign: 'center' }}>
                 <button className="contactBtn" onClick={handleContactOpen}>Contact</button>
                 <button className="contactBtn" onClick={handleSubscribeOpen}>Subscribe</button>
             </Box>

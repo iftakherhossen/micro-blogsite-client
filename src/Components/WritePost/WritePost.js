@@ -6,7 +6,7 @@ import HashTags from '../HashTags/HashTags';
 import useAuth from '../../hooks/useAuth';
 import ErrorIcon from '@mui/icons-material/Error';
 import CloseIcon from '@mui/icons-material/Close';
-import ContactInfo from '../ContactInfo/ContactInfo';
+import PopularPosts from '../PopularPosts/PopularPosts';
 
 const WritePost = () => {
     const { user, isLoading } = useAuth();
@@ -117,7 +117,7 @@ const WritePost = () => {
                 </Box>
             </Box>
             <HashTags />
-            <ContactInfo />
+            <PopularPosts />
             {postSuccess && <Snackbar open={openSnackbar} autoHideDuration={2000} action={action}>
                 <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
                     Post created successfully!
