@@ -6,19 +6,11 @@ import SendIcon from '@mui/icons-material/Send';
 import CloseIcon from '@mui/icons-material/Close';
 import { useForm } from 'react-hook-form';
 import { init } from '@emailjs/browser';
+import Styles from '../Styles/Styles';
 init("user_E3AjQo3AWXplLPqSzFb2c");
 
-const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'white',
-    boxShadow: 24,
-    p: 4,
-    textAlign: 'center'
-};
+const { contactModalStyle } = Styles();
+
 
 const ContactInfo = () => {
     const [openContact, setOpenContact] = useState(false);
@@ -108,7 +100,7 @@ const ContactInfo = () => {
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
-                <Box sx={style}>
+                <Box sx={contactModalStyle}>
                     <Typography id="modal-modal-title" variant="h5" component="h2" sx={{ textAlign: 'center', mb: 1 }}>
                         Contact with us!
                     </Typography>

@@ -1,4 +1,4 @@
-import { Alert, Avatar, Grid, IconButton, Snackbar, TextField, Tooltip, Typography } from '@mui/material';
+import { Alert, Avatar, Grid, IconButton, Modal, Snackbar, TextField, Tooltip, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { useForm } from 'react-hook-form';
 import React, { useEffect, useState } from 'react';
@@ -7,6 +7,10 @@ import useAuth from '../../hooks/useAuth';
 import ErrorIcon from '@mui/icons-material/Error';
 import CloseIcon from '@mui/icons-material/Close';
 import PopularPosts from '../PopularPosts/PopularPosts';
+import Styles from '../Styles/Styles';
+import VerifiedIcon from '@mui/icons-material/Verified';
+
+const { imgModalStyle } = Styles();
 
 const WritePost = () => {
     const { user, isLoading } = useAuth();
@@ -20,12 +24,22 @@ const WritePost = () => {
     const reactions = 0;
     const [location, setLocation] = useState('');
     const tokenAPI = process.env.REACT_APP_TOKEN_API;
+    const [creator, setCreator] = useState(false);
+    const [openImgModal, setOpenImgModal] = useState(false);
+    const handleOpenImgModal = () => setOpenImgModal(true);
+    const handleCloseImgModal = () => setOpenImgModal(false);
 
     useEffect(() => {
         fetch(`https://ipinfo.io/json?token=${tokenAPI}`)
             .then(res => res.json())
             .then(data => setLocation(data))
     }, [tokenAPI]);
+
+    useEffect(() => {
+        fetch(`https://shrouded-eyrie-37217.herokuapp.com/users/${user?.email}/creator`)
+            .then(res => res.json())
+            .then(data => setCreator(data.creator))
+    }, [user?.email])
 
     const uLocation = location?.country === 'BD' && 'Bangladesh';
     const userLocation = location?.city + ', ' + uLocation;
@@ -58,6 +72,7 @@ const WritePost = () => {
                     setOpenSnackbar(true);
                     reset();
                     window.location.reload();
+                    window.location.assign('/')
                 }
             })
     }
@@ -82,15 +97,26 @@ const WritePost = () => {
         </>
     );
 
+    const handleImgModal = () => {
+        handleOpenImgModal();
+    }
+
     return (
         <Grid item xs={12} sm={12} md={3.5} className="userInfoGridCard" data-aos="fade-right">
             <Box className="userInfoGrid">
                 <Box className="wrapper">
                     <Box className="alignCenter">
-                        <Avatar alt={user?.displayName} src={user?.photoURL} className="avatar" />
+                        <Avatar alt={user?.displayName} src={user?.photoURL} onClick={handleImgModal} className="avatar" />
                     </Box>
                     <Box className="userName">
-                        <Typography variant="h6">{user?.displayName}</Typography>
+                        <Typography variant="h6">
+                            {user?.displayName}
+                            {creator &&
+                                <Tooltip title="Verified Creator">
+                                    <VerifiedIcon sx={{ fontSize: 14, color: '#0693E3', ml:1 }} />
+                                </Tooltip>
+                            }
+                        </Typography>
                     </Box>
                     {!isLoading && <form onSubmit={handleSubmit(onSubmit)}>
                         <Box className="multilineTextField">
@@ -123,6 +149,27 @@ const WritePost = () => {
                     Post created successfully!
                 </Alert>
             </Snackbar>}
+
+            {/* ImgModal Start */}
+            <Modal
+                open={openImgModal}
+                onClose={handleCloseImgModal}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box sx={imgModalStyle}>
+                    <Typography variant="h6" sx={{ position: 'absolute', width: 1, textAlign: 'center', bgcolor: 'white', bottom: 0 }}>
+                        {user?.displayName}
+                        {creator &&
+                            <Tooltip title="Verified Creator">
+                                <VerifiedIcon sx={{ fontSize: 14, color: '#0693E3', ml: 1  }} />
+                            </Tooltip>
+                        }
+                    </Typography>
+                    <Avatar src={user?.photoURL} alt={user?.displayName} style={{ width: '100%', height: '100%', zIndex: -1, border: '5px solid #0693E3' }} />
+                </Box>
+            </Modal>
+            {/* ImgModal End */}
         </Grid>
     );
 };

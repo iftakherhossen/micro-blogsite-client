@@ -1,19 +1,28 @@
-import { Alert, AppBar, Checkbox, Container, FormControl, IconButton, LinearProgress, Snackbar, Toolbar, Tooltip, Typography } from '@mui/material';
+import { Alert, AppBar, Checkbox, Container, IconButton, LinearProgress, Snackbar, Toolbar, Tooltip, Typography } from '@mui/material';
 import { Box } from '@mui/system';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import LogoutIcon from '@mui/icons-material/Logout';
 import GoogleButton from 'react-google-button';
 import useAuth from '../../hooks/useAuth';
 import CloseIcon from '@mui/icons-material/Close';
-import DarkModeToggle from "react-dark-mode-toggle";
+import LightModeIcon from '@mui/icons-material/LightMode';
 import useDarkMode from 'use-dark-mode';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
+import VerifiedIcon from '@mui/icons-material/Verified';
 
 const Navigation = () => {
     const { user, signInWithGoogle, logOut, isLoading, authError } = useAuth();
     const [success, setSuccess] = useState(false);
     const [openSnackbar, setOpenSnackbar] = useState(false);
     const darkMode = useDarkMode(false);
+    const [creator, setCreator] = useState(false);
+
+    useEffect(() => {
+        fetch(`https://shrouded-eyrie-37217.herokuapp.com/users/${user?.email}/creator`)
+            .then(res => res.json())
+            .then(data => setCreator(data.creator))
+    }, [user?.email])
 
     const handleGoogleSignIn = () => {
         signInWithGoogle();
@@ -43,12 +52,15 @@ const Navigation = () => {
 
     const handleLogOut = () => {
         const confirm = window.confirm("Are you sure you wanna log out!");
-        if (confirm === true) { logOut(); }
+
+        if (confirm === true) {
+            logOut();
+        }
     }
 
     return (
         <div>
-            <AppBar position="static" sx={{ bgcolor: '#FFFFFF', boxShadow: 'none' }} data-aos="fade-down">
+            <AppBar position="static" sx={{ bgcolor: '#ffffff', boxShadow: 'none' }} data-aos="fade-down">
                 <Container>
                     <Toolbar disableGutters sx={{ display: 'flex', justifyContent: 'space-between' }}>
                         <Typography
@@ -62,7 +74,13 @@ const Navigation = () => {
                         <Box sx={{ flexGrow: 0, display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
                             <Box className="hidingName">
                                 {user?.email ? <Box className="navName">
-                                    <Typography>{user?.displayName}</Typography>
+                                    <Typography sx={{ display: 'flex', alignItems: 'center' }}>
+                                        {user?.displayName} {creator &&
+                                            <Tooltip title="Verified Creator">
+                                                <VerifiedIcon sx={{ fontSize: 14, ml: 1 }} />
+                                            </Tooltip>
+                                        }
+                                    </Typography>
                                 </Box> : <Box className="navName">
                                     <Typography>Welcome, User</Typography>
                                 </Box>}
@@ -79,21 +97,13 @@ const Navigation = () => {
                                     style={{ boxShadow: 'none', border: 'none', width: '50px', background: 'none' }}
                                 />
                             }
-                            &nbsp; &nbsp;
-                            {/* <DarkModeToggle
-                                onChange={setIsDarkMode}
-                                checked={isDarkMode}
-                                size={50}
-                            /> */}
-                            <div>
-                                <button type="button" onClick={darkMode.disable}>
-                                    ☀
-                                </button>
-                                <Checkbox checked={darkMode.value} onChange={darkMode.toggle} />
-                                <button type="button" onClick={darkMode.enable}>
-                                    ☾
-                                </button>
-                            </div>
+                            &nbsp;
+                            <Tooltip title="Dark Mode"><Checkbox
+                                icon={<DarkModeIcon />}
+                                checkedIcon={<LightModeIcon />}
+                                checked={darkMode.value}
+                                onChange={darkMode.toggle}
+                            /></Tooltip>
                         </Box>
                     </Toolbar>
                 </Container>

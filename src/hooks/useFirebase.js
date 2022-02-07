@@ -10,7 +10,6 @@ const useFirebase = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [authError, setAuthError] = useState('');
     const [admin, setAdmin] = useState(true);
-
     const auth = getAuth();
     const googleProvider = new GoogleAuthProvider();
 
@@ -49,6 +48,7 @@ const useFirebase = () => {
             .then(() => { })
             .catch((error) => { })
             .finally(() => setIsLoading(false));
+        window.location.reload();
     }
 
     useEffect(() => {

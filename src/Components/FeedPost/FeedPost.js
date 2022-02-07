@@ -18,54 +18,9 @@ import Linkify from 'react-linkify';
 import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from '@mui/icons-material/Close';
 import VerifiedIcon from '@mui/icons-material/Verified';
+import Styles from '../Styles/Styles';
 
-
-const modalStyle = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 250,
-    bgcolor: '#E6ECF0',
-    boxShadow: 24,
-    p: 3,
-    textAlign: 'center'
-};
-
-const editModalStyle = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 350,
-    bgcolor: '#E6ECF0',
-    boxShadow: 24,
-    p: 3
-};
-
-const moreBtnPortalStyle = {
-    position: 'absolute',
-    top: 30,
-    right: 115,
-    zIndex: 1,
-    p: 1,
-    width: '100%',
-    bgcolor: 'transparent',
-    display: 'flex',
-    justifyContent: 'flex-start'
-};
-
-const imgModalStyle = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 200,
-    height: 200,
-    boxShadow: 24,
-    border: 'none',
-    outline: 'none'
-};
+const { modalStyle, editModalStyle, moreBtnPortalStyle, imgModalStyle } = Styles();
 
 const FeedPost = ({ singlePost, handleDelete }) => {
     const { _id, username, email, date, img, content, time, userLocation } = singlePost;
@@ -95,6 +50,8 @@ const FeedPost = ({ singlePost, handleDelete }) => {
     const handleOpenImgModal = () => setOpenImgModal(true);
     const handleCloseImgModal = () => setOpenImgModal(false);
     const cUsername = username.replace(/ /g, '');
+    const link = `/users/${username}`;
+    const updatedLink = link.replace(/ /g, '');
 
     const hashtagContent = content.split(" ").map((str) => {
         if (str.startsWith("#")) {
@@ -113,20 +70,20 @@ const FeedPost = ({ singlePost, handleDelete }) => {
         navigator.clipboard.writeText(content);
     }
 
-    const handleViewPost = (_id, username, email, date, img, content) => {
-        const singlePost = { _id, username, email, date, img, content };
+    const handleViewPost = (_id, username, email, date, img, content, time, userLocation) => {
+        const singlePost = { _id, username, email, date, img, content, time, userLocation };
         navigate(viewPostLink, { state: singlePost });
-        console.log(singlePost);
     }
 
-    const handleSavePost = (_id, username, email, date, img, content) => {
-        const postData = { _id, username, email, date, img, content };
+    const handleSavePost = (_id, username, email, date, img, content, time, userLocation) => {
+        const postData = { _id, username, email, date, img, content, time, userLocation };
         console.log(postData);
         setSavedPost(postData);
     }
 
-    const handleViewProfile = () => {
-        console.log("clicked")
+    const handleUserProfile = (data) => {
+        console.log('clicked');
+        // navigate(updatedLink, { state: data });
     }
 
     const handleEditPost = () => {
@@ -175,7 +132,7 @@ const FeedPost = ({ singlePost, handleDelete }) => {
         <Card sx={{ width: 1, mt: 1, mb: 1.3 }}>
             <CardHeader
                 avatar={
-                    <Avatar alt={username} src={img} sx={{ bgcolor: "#0693E3" }} onClick={handleImgModal} />
+                    <Avatar alt={username} src={img} sx={{ bgcolor: "#0693E3", cursor: 'pointer' }} onClick={handleImgModal} />
                 }
                 action={
                     <ClickAwayListener onClickAway={handleClickAway}>
@@ -198,7 +155,7 @@ const FeedPost = ({ singlePost, handleDelete }) => {
                                             </Tooltip>
                                     }
                                     <Tooltip title="View Post">
-                                        <IconButton aria-label="copy-post" onClick={() => handleViewPost(_id, username, email, date, img, content)}>
+                                        <IconButton aria-label="copy-post" onClick={() => handleViewPost(_id, username, email, date, img, content, time, userLocation)}>
                                             <OpenInNewIcon className="iconHover" />
                                         </IconButton>
                                     </Tooltip>
@@ -216,7 +173,7 @@ const FeedPost = ({ singlePost, handleDelete }) => {
                                             </Tooltip>
                                             :
                                             <Tooltip title="Save Post">
-                                                <IconButton aria-label="save-post" onClick={() => handleSavePost(_id, username, email, date, img, content)}>
+                                                <IconButton aria-label="save-post" onClick={() => handleSavePost(_id, username, email, date, img, content, time, userLocation)}>
                                                     <LibraryAddIcon className="iconHover" />
                                                 </IconButton>
                                             </Tooltip>
@@ -227,7 +184,7 @@ const FeedPost = ({ singlePost, handleDelete }) => {
                     </ClickAwayListener>
                 }
                 title={
-                    <Typography variant="body1" sx={{ mb: '-4px', fontWeight: 'bold' }} onClick={() => handleViewProfile()}>
+                    <Typography variant="body1" sx={{ mb: '-4px', fontWeight: 'bold', cursor: 'pointer' }} onClick={() => handleUserProfile()}>
                         {username} {creator && <Tooltip title="Verified Creator"><VerifiedIcon sx={{ fontSize: 14, color: '#0693E3' }} /></Tooltip>}
                     </Typography>
                 }
@@ -258,8 +215,15 @@ const FeedPost = ({ singlePost, handleDelete }) => {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={imgModalStyle}>
-                    <Typography variant="h6" sx={{ position: 'absolute', width: 1, textAlign: 'center', bgcolor: 'white', bottom: 0 }}>{username} {creator && <Tooltip title="Verified Creator"><VerifiedIcon sx={{ fontSize: 14, color: '#0693E3' }} /></Tooltip>}</Typography>
-                    <img src={img} alt={username} style={{ width: '100%' }} />
+                    <Typography variant="h6" sx={{ position: 'absolute', width: 1, textAlign: 'center', bgcolor: 'white', bottom: 0 }}>
+                        {username}
+                        {creator &&
+                            <Tooltip title="Verified Creator">
+                                <VerifiedIcon sx={{ fontSize: 14, color: '#0693E3' }} />
+                            </Tooltip>
+                        }
+                    </Typography>
+                    <Avatar src={img} alt={username} style={{ width: '100%', height: '100%', zIndex: -1, border: '5px solid #0693E3' }} />
                 </Box>
             </Modal>
             {/* ImgModal End */}
@@ -277,7 +241,7 @@ const FeedPost = ({ singlePost, handleDelete }) => {
                             <Avatar alt={username} src={img} sx={{ bgcolor: "#0693E3" }} />
                         }
                         title={
-                            <Typography variant="body1" sx={{ mb: '-4px' }} className="fwBold" onClick={() => handleViewProfile()}>{username}</Typography>
+                            <Typography variant="body1" sx={{ mb: '-4px' }} className="fwBold">{username}</Typography>
                         }
                         subheader={
                             <Typography variant="caption" sx={{ color: '#aaa', mt: 0, pt: 0 }}>
