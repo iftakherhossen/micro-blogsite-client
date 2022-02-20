@@ -95,6 +95,7 @@ const User = ({ folk }) => {
                     </Tooltip>
                 }
             </div>
+            
             {success && <Snackbar open={openSnackbar} autoHideDuration={2000} action={action}>
                 <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
                     Overridden User deleted successfully!

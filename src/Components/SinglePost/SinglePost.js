@@ -24,7 +24,6 @@ const { modalStyle, editModalStyle, moreBtnPortalStyle, imgModalStyle } = Styles
 
 const SinglePost = ({ singlePost, handleDelete }) => {
     const { _id, username, email, date, img, content, time, userLocation } = singlePost;
-    console.log(singlePost)
     const { user, admin } = useAuth();
     const [shareModalOpen, setShareModalOpen] = useState(false);
     const [editedContent, setEditedContent] = useState('');
