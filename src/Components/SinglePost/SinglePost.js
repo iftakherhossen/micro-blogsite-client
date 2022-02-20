@@ -24,6 +24,7 @@ const { modalStyle, editModalStyle, moreBtnPortalStyle, imgModalStyle } = Styles
 
 const SinglePost = ({ singlePost, handleDelete }) => {
     const { _id, username, email, date, img, content, time, userLocation } = singlePost;
+    console.log(singlePost)
     const { user, admin } = useAuth();
     const [shareModalOpen, setShareModalOpen] = useState(false);
     const [editedContent, setEditedContent] = useState('');
@@ -126,6 +127,11 @@ const SinglePost = ({ singlePost, handleDelete }) => {
         handleOpenImgModal();
     }
 
+    const handleCopyLink = () => {
+        const link = window.location.href;
+        navigator.clipboard.writeText(link);
+    }
+
     return (
         <Grid item xs={12} sm={12} md={5.5} className="gridCard">
             <Card sx={{ width: 1, mt: 1, mb: 1.3 }}>
@@ -204,8 +210,9 @@ const SinglePost = ({ singlePost, handleDelete }) => {
                         <ShareIcon className="iconHover" />
                     </IconButton>
                 </CardActions>
+            </Card >
 
-
+            <>
                 {/* ImgModal Start */}
                 <Modal
                     open={openImgModal}
@@ -279,7 +286,10 @@ const SinglePost = ({ singlePost, handleDelete }) => {
                         <Typography id="modal-modal-title" variant="h6" component="h2">
                             Share this Post
                         </Typography>
-                        <Box sx={{ mt: 1 }}>
+                        <Box sx={{ mt: 1, display: 'flex', justifyContent: 'center', alignItems: 'flex-end' }}>
+                            <IconButton aria-label="copy-post" onClick={handleCopyLink} sx={{ mb: '3px', p: '6px', mr: '6px', bgcolor: '#ddd' }}>
+                                <ContentCopyIcon sx={{ color: 'black', fontSize: 19 }} />
+                            </IconButton>
                             <EmailShareButton url={`${mainLink}/${username}/posts/${_id}`} subject="Sharing Post via Email" body={`${username} shared a post on micro blogsite`} separator=" " className="shareBtn">
                                 <EmailIcon size={30} round={true} />
                             </EmailShareButton>
@@ -305,7 +315,7 @@ const SinglePost = ({ singlePost, handleDelete }) => {
                         Post updated successfully!
                     </Alert>
                 </Snackbar>}
-            </Card >
+            </>
         </Grid>
     );
 };

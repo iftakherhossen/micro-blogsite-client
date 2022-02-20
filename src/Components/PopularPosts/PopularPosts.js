@@ -32,7 +32,7 @@ const PopularPosts = () => {
             <Divider />
             {
                 limitedPosts.map(post => <PopularPost
-                    key={post._id}
+                    key={post.time}
                     post={post}
                 />
                 )

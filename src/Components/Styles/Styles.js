@@ -4,7 +4,7 @@ const Styles = () => {
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        width: 250,
+        width: 260,
         bgcolor: '#E6ECF0',
         boxShadow: 24,
         p: 3,

@@ -1,12 +1,15 @@
-import { Alert, Grid, IconButton, Snackbar } from '@mui/material';
+import { Alert, CircularProgress, Grid, IconButton, Snackbar } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import FeedPost from '../FeedPost/FeedPost';
 import CloseIcon from '@mui/icons-material/Close';
+import useAuth from '../../hooks/useAuth';
+import { Box } from '@mui/system';
 
 const PostFeed = () => {
     const [post, setPost] = useState([]);
     const [success, setSuccess] = useState(false);
     const [openSnackbar, setOpenSnackbar] = useState(false);
+    const { isLoading } = useAuth();
 
     useEffect(() => {
         fetch('https://shrouded-eyrie-37217.herokuapp.com/posts')
@@ -60,8 +63,10 @@ const PostFeed = () => {
     return (
         <Grid item xs={12} sm={12} md={5.5} className="gridCard">
             {
-                post.slice(0).reverse().map((singlePost) => <FeedPost
-                    key="singlePost._id"
+                isLoading ? <Box sx={{ display: 'flex', justifyContent: 'center', height: '100vh', alignItems: 'center' }}>
+                    <CircularProgress />
+                </Box> : post.slice(0).reverse().map((singlePost) => <FeedPost
+                    key={singlePost._id}
                     singlePost={singlePost}
                     handleDelete={handleDelete}
                 />)
