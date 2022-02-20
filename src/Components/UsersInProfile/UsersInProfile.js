@@ -31,12 +31,10 @@ const UsersInProfile = () => {
                                 />)
                             }
                         </List>
-                        {users.length >= 10 && <>
-                            <Divider sx={{ my: 1 }} />
-                            <Box>
-                                <Button variant="inherit" sx={{ color: '#0693E3', fontWeight: 'bold' }} onClick={handleShowMoreBtn}>Show More!</Button>
-                            </Box>
-                        </>}
+                        <Divider sx={{ my: 1 }} />
+                        <Box>
+                            <Button variant="inherit" sx={{ color: '#0693E3', fontWeight: 'bold' }} onClick={handleShowMoreBtn}>Show More!</Button>
+                        </Box>
                     </Box>
                 </Box>
             </Box>

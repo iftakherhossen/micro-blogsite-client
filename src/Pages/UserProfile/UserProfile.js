@@ -1,7 +1,5 @@
 import React from 'react';
 import { Container, Grid } from '@mui/material';
-import Navigation from '../../Components/Navigation/Navigation';
-import Footer from '../../Components/Footer/Footer';
 import Profile from '../../Components/Profile/Profile';
 import MyPosts from '../../Components/MyPosts/MyPosts';
 import UsersInProfile from '../../Components/UsersInProfile/UsersInProfile';
@@ -13,7 +11,6 @@ const UserProfile = () => {
 
     return (
         <div>
-            <Navigation />
             <Container>
                 <Grid container>
                     <Profile userData={userData} />
@@ -21,7 +18,6 @@ const UserProfile = () => {
                     <UsersInProfile />
                 </Grid>
             </Container>
-            <Footer />
         </div>
     );
 };

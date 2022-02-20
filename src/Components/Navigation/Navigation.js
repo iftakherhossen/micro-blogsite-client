@@ -17,6 +17,13 @@ const Navigation = () => {
     const [openSnackbar, setOpenSnackbar] = useState(false);
     const darkMode = useDarkMode(false);
     const [creator, setCreator] = useState(false);
+    const [folk, setFolk] = useState([]);
+
+    useEffect(() => {
+        fetch(`https://shrouded-eyrie-37217.herokuapp.com/user/${user?.email}`)
+            .then(res => res.json())
+            .then(data => console.log(data));
+    }, [user.email])
 
     useEffect(() => {
         fetch(`https://shrouded-eyrie-37217.herokuapp.com/users/${user?.email}/creator`)

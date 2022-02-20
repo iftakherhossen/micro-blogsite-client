@@ -6,7 +6,7 @@ const Users = () => {
     const [users, setUsers] = useState([]);
 
     useEffect(() => {
-        fetch('https://shrouded-eyrie-37217.herokuapp.com/limitedUsers')
+        fetch('https://shrouded-eyrie-37217.herokuapp.com/users')
             .then(res => res.json())
             .then(data => setUsers(data));
     }, []);

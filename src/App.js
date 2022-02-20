@@ -10,6 +10,8 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import NotFound from './Components/NotFound/NotFound';
 import UsersPage from './Pages/UsersPage/UsersPage';
+import Navigation from './Components/Navigation/Navigation';
+import Footer from './Components/Footer/Footer';
 
 function App() {
   AOS.init();
@@ -42,6 +44,7 @@ function App() {
   return (
     <AuthProvider>
       <Router>
+        <Navigation />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/home" element={<Home />} />
@@ -51,6 +54,7 @@ function App() {
           <Route path="/users/:displayName/savedPosts" element={<SavedPosts />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
+        <Footer />
       </Router>
     </AuthProvider>
   );

@@ -13,7 +13,7 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import DeleteIcon from '@mui/icons-material/Delete';
 import useAuth from '../../hooks/useAuth';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Linkify from 'react-linkify';
 import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from '@mui/icons-material/Close';
@@ -24,7 +24,6 @@ const { modalStyle, editModalStyle, moreBtnPortalStyle, imgModalStyle } = Styles
 
 const SinglePost = ({ singlePost, handleDelete }) => {
     const { _id, username, email, date, img, content, time, userLocation } = singlePost;
-    console.log(singlePost)
     const { user, admin } = useAuth();
     const [shareModalOpen, setShareModalOpen] = useState(false);
     const [editedContent, setEditedContent] = useState('');
@@ -32,6 +31,8 @@ const SinglePost = ({ singlePost, handleDelete }) => {
     const [openSnackbar, setOpenSnackbar] = useState(false);
     const [editModalOpen, setEditModalOpen] = useState(false);
     const [moreOpen, setMoreOpen] = useState(false);
+    const [postId, setPostId] = useState(_id);
+    const [savedPost, setSavedPost] = useState([]);
     const handleShareModalOpen = () => setShareModalOpen(true);
     const handleShareModalClose = () => setShareModalOpen(false);
     const handleEditModalOpen = () => setEditModalOpen(true);
@@ -42,9 +43,14 @@ const SinglePost = ({ singlePost, handleDelete }) => {
     const hashtags = ["bloom", "microblogsite", "postoftheday"];
     const related = ["@iftakher_hossen", "@microbblogsite, @healyourselfbd"];
     const navigate = useNavigate();
-    const viewLink = `/${username}/posts/${_id}`;
+    const param = useParams();
+    if (!_id) {
+        setPostId(param.id)
+    }
+    console.log(postId)
+    const viewLink = `/${username}/posts/${postId}`;
     const viewPostLink = viewLink.replace(/ /g, '');
-    const [savedPost, setSavedPost] = useState([]);
+    
     const localDate = time + ', ' + date + ', ' + userLocation;
     const [creator, setCreator] = useState(false);
     const [openImgModal, setOpenImgModal] = useState(false);
@@ -72,12 +78,11 @@ const SinglePost = ({ singlePost, handleDelete }) => {
     const handleViewPost = (_id, username, email, date, img, content, time, userLocation) => {
         const singlePost = { _id, username, email, date, img, content, time, userLocation };
         navigate(viewPostLink, { state: singlePost });
-        console.log(singlePost);
     }
 
     const handleSavePost = (_id, username, email, date, img, content, time, userLocation) => {
         const postData = { _id, username, email, date, img, content, time, userLocation };
-        console.log(postData);
+        console.log(postData, savedPost);
         setSavedPost(postData);
     }
 
