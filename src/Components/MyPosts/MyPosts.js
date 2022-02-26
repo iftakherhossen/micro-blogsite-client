@@ -9,7 +9,12 @@ const MyPosts = ({ userData }) => {
     const [openSnackbar, setOpenSnackbar] = useState(false);
 
     useEffect(() => {
-        fetch(`https://shrouded-eyrie-37217.herokuapp.com/posts/${userData.email}`)
+        fetch(`https://shrouded-eyrie-37217.herokuapp.com/posts/${userData.email}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        })
             .then(res => res.json())
             .then(data => setPost(data));
     }, [userData.email]);

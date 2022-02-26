@@ -61,10 +61,15 @@ const FeedPost = ({ singlePost, handleDelete }) => {
     })
 
     useEffect(() => {
-        fetch(`https://shrouded-eyrie-37217.herokuapp.com/users/${email}/creator`)
+        fetch(`https://shrouded-eyrie-37217.herokuapp.com/users/${email}/creator`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        })
             .then(res => res.json())
             .then(data => setCreator(data.creator))
-    }, [email])
+    }, [email]);
 
     const handleCopyBtn = (content) => {
         navigator.clipboard.writeText(content);
@@ -91,7 +96,9 @@ const FeedPost = ({ singlePost, handleDelete }) => {
         fetch(`https://shrouded-eyrie-37217.herokuapp.com/${cUsername}/post/${_id}`, {
             method: 'PUT',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                
             },
             body: JSON.stringify(editedContent)
         })

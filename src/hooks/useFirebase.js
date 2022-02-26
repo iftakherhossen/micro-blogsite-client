@@ -52,7 +52,12 @@ const useFirebase = () => {
     }
 
     useEffect(() => {
-        fetch(`https://shrouded-eyrie-37217.herokuapp.com/users/${user.email}/admin`)
+        fetch(`https://shrouded-eyrie-37217.herokuapp.com/users/${user.email}/admin`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        })
             .then(res => res.json())
             .then(data => setAdmin(data.admin));
     }, [user.email]);
@@ -63,7 +68,8 @@ const useFirebase = () => {
         fetch('https://shrouded-eyrie-37217.herokuapp.com/users', {
             method: 'PUT',
             headers: {
-                'Content-type': 'application/json'
+                'Content-type': 'application/json',
+                'Accept': 'application/json'
             },
             body: JSON.stringify(user)
         })

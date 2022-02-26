@@ -21,7 +21,12 @@ const PopularPost = ({ post }) => {
     })
 
     useEffect(() => {
-        fetch(`https://shrouded-eyrie-37217.herokuapp.com/users/${email}/creator`)
+        fetch(`https://shrouded-eyrie-37217.herokuapp.com/users/${email}/creator`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        })
             .then(res => res.json())
             .then(data => setCreator(data.creator))
     }, [email])

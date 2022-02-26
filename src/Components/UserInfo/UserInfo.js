@@ -10,7 +10,12 @@ const UserInfo = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch('https://shrouded-eyrie-37217.herokuapp.com/limitedUsers')
+        fetch('https://shrouded-eyrie-37217.herokuapp.com/limitedUsers', {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        })
             .then(res => res.json())
             .then(data => setUsers(data));
     }, []);

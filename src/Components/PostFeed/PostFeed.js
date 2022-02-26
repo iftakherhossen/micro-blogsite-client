@@ -12,7 +12,12 @@ const PostFeed = () => {
     const { isLoading } = useAuth();
 
     useEffect(() => {
-        fetch('https://shrouded-eyrie-37217.herokuapp.com/posts')
+        fetch('https://shrouded-eyrie-37217.herokuapp.com/posts', {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        })
             .then(res => res.json())
             .then(data => setPost(data));
     }, []);

@@ -17,16 +17,25 @@ const Navigation = () => {
     const [openSnackbar, setOpenSnackbar] = useState(false);
     const darkMode = useDarkMode(false);
     const [creator, setCreator] = useState(false);
-    const [folk, setFolk] = useState([]);
 
     useEffect(() => {
-        fetch(`https://shrouded-eyrie-37217.herokuapp.com/user/${user?.email}`)
+        fetch(`https://shrouded-eyrie-37217.herokuapp.com/user/${user?.email}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        })
             .then(res => res.json())
             .then(data => console.log(data));
     }, [user.email])
 
     useEffect(() => {
-        fetch(`https://shrouded-eyrie-37217.herokuapp.com/users/${user?.email}/creator`)
+        fetch(`https://shrouded-eyrie-37217.herokuapp.com/users/${user?.email}/creator`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        })
             .then(res => res.json())
             .then(data => setCreator(data.creator))
     }, [user?.email])

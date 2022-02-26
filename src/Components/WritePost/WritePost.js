@@ -30,13 +30,23 @@ const WritePost = () => {
     const handleCloseImgModal = () => setOpenImgModal(false);
 
     useEffect(() => {
-        fetch(`https://ipinfo.io/json?token=${tokenAPI}`)
+        fetch(`https://ipinfo.io/json?token=${tokenAPI}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        })
             .then(res => res.json())
             .then(data => setLocation(data))
     }, [tokenAPI]);
 
     useEffect(() => {
-        fetch(`https://shrouded-eyrie-37217.herokuapp.com/users/${user?.email}/creator`)
+        fetch(`https://shrouded-eyrie-37217.herokuapp.com/users/${user?.email}/creator`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        })
             .then(res => res.json())
             .then(data => setCreator(data.creator))
     }, [user?.email])

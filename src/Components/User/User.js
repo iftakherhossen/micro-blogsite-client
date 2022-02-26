@@ -23,7 +23,12 @@ const User = ({ folk }) => {
     }
 
     useEffect(() => {
-        fetch(`https://shrouded-eyrie-37217.herokuapp.com/posts/${email}`)
+        fetch(`https://shrouded-eyrie-37217.herokuapp.com/posts/${email}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        })
             .then(res => res.json())
             .then(data => setUsersPost(data))
     }, [email]);
