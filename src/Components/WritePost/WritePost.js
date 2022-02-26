@@ -61,7 +61,8 @@ const WritePost = () => {
         fetch('https://shrouded-eyrie-37217.herokuapp.com/posts', {
             method: 'POST',
             headers: {
-                'content-type': 'application/json'
+                'content-type': 'application/json',
+                'Accept': 'application/json' 
             },
             body: JSON.stringify(post)
         })
